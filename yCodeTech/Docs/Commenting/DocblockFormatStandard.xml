@@ -1,0 +1,92 @@
+<documentation title="Docblock Format">
+    <standard>
+        <![CDATA[
+        Enforces proper spacing and formatting in docblocks:
+        1. All docblock tags must have exactly `1 space` between each element.
+        2. Type and variable in any tags must have exactly `1 space` between them.
+        3. `@return` tags must be preceded by exactly `1 empty line`.
+
+        ]]>
+    </standard>
+    <code_comparison>
+        <code title="✔️ Valid: Exactly 1 space between tag elements">
+            <![CDATA[
+/**
+ * @param string<em> </em>$name<em> </em>The name parameter
+ * @throws<em> </em>Exception<em> </em>If something goes wrong
+ * @see<em> </em>SomeClass<em> </em>For more information
+ * @var<em> </em>string
+ * @copyright<em> </em>Copyright (c) year, Name
+ */
+            ]]>
+        </code>
+        <code title="❌ Invalid: Multiple spaces between tag elements">
+            <![CDATA[
+/**
+ * @param string<em>    </em>$name<em>       </em>The name parameter
+ * @throws<em>    </em>Exception<em>    </em>If something goes wrong
+ * @see<em>    </em>SomeClass<em>  </em>For more information
+ * @var<em>    </em>string
+ * @copyright        Copyright (c) year, Name
+ */
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Exactly 1 space between type and variable">
+            <![CDATA[
+/**
+ * @param string<em> </em>$name The name parameter
+ */
+            ]]>
+        </code>
+        <code title="❌ Invalid: 0 spaces between type and variable">
+            <![CDATA[
+/**
+ * @param string<em></em>$name The name parameter
+ */
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Exactly 1 empty line before @return tag">
+            <![CDATA[
+/**
+ * @param string $name The name parameter
+ *<em>
+ * </em>@return string
+ */
+            ]]>
+        </code>
+        <code title="❌ Invalid: 0 empty lines before @return tag">
+            <![CDATA[
+/**
+ * @param string $name The name parameter
+ * <em></em>@return string
+ */
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Exactly 1 empty line before @return tag">
+            <![CDATA[
+/**
+ * @param string $name The name parameter
+ *<em>
+ * </em>@return string
+ */
+            ]]>
+        </code>
+        <code title="❌ Invalid: Multiple empty lines before @return tag">
+            <![CDATA[
+/**
+ * @param string $name The name parameter
+ *<em>
+ *
+ *
+ * </em>@return string
+ */
+            ]]>
+        </code>
+    </code_comparison>
+</documentation>

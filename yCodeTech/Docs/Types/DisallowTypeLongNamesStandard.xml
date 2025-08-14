@@ -1,0 +1,132 @@
+<documentation title="Disallow Type Long Names">
+    <standard>
+        <![CDATA[
+        Long type names are disallowed. Short names must be used in all contexts: docblocks, generic types, type declarations, and type casting.
+
+        This rule enforces:
+
+        1. Use `bool` instead of `boolean` in ALL contexts
+        2. Use `int` instead of `integer` in ALL contexts
+
+        Applies to:
+
+        1. Regular docblock tags that contain types (`@param`, `@return`, `@var`, `@property`, `@method`) and any others that contain these regular tags (`@property-read`, `@property-write`, `@phpstan-*`, `@psalm-*`, etc.)
+        2. Docblock generic types: `array<integer, boolean>` → `array<int, bool>`, `array<boolean>` → `array<bool>`, `Collection<integer>` → `Collection<int>`, etc.
+        3. Function/method/closure parameter and return type declarations
+        4. Class property type declarations
+        5. Nullable and union types: `?boolean` → `?bool`, `?integer` → `?int`, `boolean|string` → `bool|string`, `integer|string` → `int|string`
+        6. Type casting: `(boolean)` → `(bool)`, `(integer)` → `(int)`
+        ]]>
+    </standard>
+    <code_comparison>
+        <code title="✔️ Valid: Short name docblock types">
+            <![CDATA[
+/**
+ * @param <em>bool</em> $isValid
+ * @psalm-param <em>bool</em> $isValid
+ * @return <em>int</em>
+ */
+            ]]>
+        </code>
+        <code title="❌ Invalid: Long name docblock types">
+            <![CDATA[
+/**
+ * @param <em>boolean</em> $isValid
+ * @psalm-param <em>boolean</em> $isValid
+ * @return <em>integer</em>
+ */
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Short name docblock generic types">
+            <![CDATA[
+/**
+ * @param Collection<<em>int</em>> $numbers
+ * @param Map<string, <em>bool</em>> $settings
+ * @param array<string, <em>int</em>> $counts
+ * @param array< <em>bool</em>, <em>int</em>> $counts
+ */
+            ]]>
+        </code>
+        <code title="❌ Invalid: Long name docblock generic types">
+            <![CDATA[
+/**
+ * @param Collection<<em>integer</em>> $numbers
+ * @param Map<string, <em>boolean</em>> $settings
+ * @param array<string, <em>integer</em>> $counts
+ * @param array< <em>boolean</em>, <em>integer</em>> $counts
+ */
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Short name class property type declarations">
+            <![CDATA[
+
+private <em>bool</em> $isActive;
+protected <em>int</em> $userCount;
+            ]]>
+        </code>
+        <code title="❌ Invalid: Long name class property type declarations">
+            <![CDATA[
+private <em>boolean</em> $isActive;
+protected <em>integer</em> $userCount;
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Short name function/method/closure types">
+            <![CDATA[
+function foo(<em>bool</em> $flag): <em>int</em> {
+    $callback = function(<em>bool</em> $isValid): <em>int</em> {
+        return $isValid ? 10 : 5;
+    };
+    
+    return $callback($flag);
+}
+            ]]>
+        </code>
+        <code title="❌ Invalid: Long name function/method/closure types">
+            <![CDATA[
+function foo(<em>boolean</em> $flag): <em>integer</em> {
+    $callback = function(<em>boolean</em> $isValid): <em>integer</em> {
+        return $isValid ? 10 : 5;
+    };
+    
+    return $callback($flag);
+}
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Short name nullable and union types">
+            <![CDATA[
+function foo(?<em>bool</em> $flag, <em>bool</em>|string $var): ?<em>int</em> {
+    return $flag ? 10 : null;
+}
+            ]]>
+        </code>
+        <code title="❌ Invalid: Long name nullable and union types">
+            <![CDATA[
+function foo(?<em>boolean</em> $flag, <em>boolean</em>|string $var): ?<em>integer</em> {
+    return $flag ? 10 : null;
+}
+            ]]>
+        </code>
+    </code_comparison>
+    <code_comparison>
+        <code title="✔️ Valid: Short name type casting">
+            <![CDATA[
+$foo = <em>(bool)</em> $isValid;
+$bar = <em>(int)</em> $count;
+            ]]>
+        </code>
+        <code title="❌ Invalid: Long name type casting">
+            <![CDATA[
+$foo = <em>(boolean)</em> $isValid;
+$bar = <em>(integer)</em> $count;
+            ]]>
+        </code>
+    </code_comparison>
+</documentation>

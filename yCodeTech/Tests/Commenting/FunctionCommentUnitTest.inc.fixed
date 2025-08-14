@@ -1,0 +1,105 @@
+<?php
+
+/**
+ * Test input file for FunctionCommentSniff.
+ */
+
+class TestClass
+{
+    /**
+     * Function missing @return tag.
+     *
+     * @param string $input Input parameter
+     *
+     * @return mixed
+     */
+    public function testMissingReturn($input)
+    {
+        return strtoupper($input);
+    }
+
+    /**
+     * Function with @return tag (should not be flagged).
+     *
+     * @param string $input Input parameter
+     *
+     * @return string
+     */
+    public function testWithReturn($input)
+    {
+        return strtoupper($input);
+    }
+
+    /**
+     * Void function (should not be flagged).
+     *
+     * @param string $message Message to display
+     */
+    public function testVoidFunction($message): void
+    {
+        echo $message;
+    }
+
+    /**
+     * Function that only echoes (should not be flagged).
+     *
+     * @param string $message Message to display
+     */
+    public function testEchoFunction($message)
+    {
+        echo $message;
+    }
+
+    /**
+     * Function with empty return (should not be flagged).
+     *
+     * @param string $condition Condition
+     */
+    public function testEmptyReturn($condition)
+    {
+        if ($condition === 'exit') {
+            return;
+        }
+        echo "Continuing...";
+    }
+
+    /**
+     * Generator function missing @return tag (should be flagged for iterable).
+     *
+     * @param array $items Items to iterate
+     *
+     * @return iterable
+     */
+    public function testGeneratorMissingReturn($items)
+    {
+        foreach ($items as $item) {
+            yield $item;
+        }
+    }
+
+    /**
+     * Generator function with yield from missing @return tag (should be flagged).
+     *
+     * @param array $items Items to iterate
+     *
+     * @return iterable
+     */
+    public function testGeneratorYieldFromMissingReturn($items)
+    {
+        yield from $items;
+    }
+
+    /**
+     * Generator with @return iterable (should not be flagged).
+     *
+     * @param array $items Items to iterate
+     *
+     * @return iterable
+     */
+    public function testGeneratorWithReturn($items)
+    {
+        foreach ($items as $item) {
+            yield $item;
+        }
+    }
+}

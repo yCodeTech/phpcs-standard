@@ -1,0 +1,43 @@
+<?php
+
+// @phpcs:disable Generic.Commenting.DocComment.MissingShort
+
+/**
+ * Test file for DisallowTypeLongNamesSniff - Type Declarations.
+ *
+ * Tests detection of long type names in PHP type declarations.
+ */
+
+class TestClass
+{
+    // Type declarations with long types
+    private bool $boolProperty;
+    protected int $intProperty;
+
+    // Function with type declaration errors
+    /**
+     * @return bool
+     */
+    public function typeDeclarationErrors(bool $param1, int $param2): bool
+    {
+        return true;
+    }
+
+    // Nullable types with long forms
+    /**
+     * @return int|null
+     */
+    public function nullableTypes(?bool $param): ?int
+    {
+        return null;
+    }
+
+    // Union types with long forms
+    /**
+     * @return string|bool
+     */
+    public function unionTypes(bool|int $param): string|bool
+    {
+        return "test";
+    }
+}

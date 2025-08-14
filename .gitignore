@@ -1,0 +1,12 @@
+# Composer
+vendor
+composer.lock
+
+# Only used for vscode intellisense, not for actual code.
+/phpcs.xml
+
+# PHPUnit Cache
+.phpunit.cache
+
+# VScode
+.vscode

@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+
+<!--
+****************************************************************
+*             _____           _    _____         _             *
+*            /  __ \         | |  |_   _|       | |            *
+*       _   _| /  \/ ___   __| | ___| | ___  ___| |__          *
+*      | | | | |    / _ \ / _` |/ _ \ |/ _ \/ __| '_ \         *
+*      | |_| | \__/\ (_) | (_| |  __/ |  __/ (__| | | |        *
+*       \__, |\____/\___/ \__,_|\___\_/\___|\___|_| |_|        *
+*        __/ |                         Coding Standards        *
+*       |___/                                                  *
+*                                                              *
+*   yCodeTech's Coding Standards for PHP_CodeSniffer (PHPCS)   *
+*                                                              *
+*        **********************************************        *
+*                                                              *
+*   This standard enforces the following rules:                  *
+*                                                              *
+*   - Use `bool` type name instead of `boolean` in both       *
+*     docblocks and PHP type declarations.                    *
+*                                                              *
+*   - Use `int` type name instead of `integer` in both        *
+*     docblocks and PHP type declarations.                    *
+*                                                              *
+*   - Require 1 single empty line before `@return` tag.       *
+*                                                              *
+*   - Require 1 single space between each all @-tags'         *
+*     elements (type, variable, etc.).                        *
+*                                                              *
+*   - Require a `@return` tag except when the return type is  *
+*     `void`.                                                  *
+*                                                              *
+****************************************************************
+-->
+
+
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="yCodeTech" xsi:noNamespaceSchemaLocation="https://schema.phpcodesniffer.com/phpcs.xsd">
+
+    <description>Custom PHPCS standard for yCodeTech with extended docblock rules</description>
+    
+    <!-- Show sniff codes -->
+    <arg value="s"/>
+
+
+    <!-- Include base PSR-12 standard but exclude some rules -->
+    <rule ref="PSR12">
+        <!-- Disable namespace requirement -->
+        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
+        <!-- Disable PSR12's type casts short names sniff, as we'll use our own implementation. -->
+        <exclude name="PSR12.Keywords.ShortFormTypeKeywords"/>
+
+        <!-- Disable Squiz's space after close brace sniff. Allows newlines in between if...else braces. -->
+        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"></exclude>
+        <!-- Disable Generic's line endings sniff. Allows different EOL characters. -->
+        <exclude name="Generic.Files.LineEndings.InvalidEOLChar"></exclude>
+        <!-- Disable PSR2's end file newline sniff. -->
+        <exclude name="PSR2.Files.EndFileNewline.NoneFound"></exclude>
+
+    </rule>    
+    
+    <!-- Docblock formatting -->
+    <rule ref="Generic.Commenting.DocComment">
+        <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+        <exclude name="Generic.Commenting.DocComment.NonParamGroup"/>
+    </rule>
+
+    <!-- Type hints -->
+    <rule ref="Generic.PHP.LowerCaseType"/>
+    
+    <!-- Custom yCodeTech sniffs -->
+    <!-- Disallow long type names in both docblocks and PHP type declarations -->
+    <rule ref="yCodeTech.Types.DisallowTypeLongNames"/>
+    
+    <!-- Docblock formatting and spacing rules -->
+    <rule ref="yCodeTech.Commenting.DocblockFormat"/>
+    
+    <!-- Function comment requirements -->
+    <rule ref="yCodeTech.Commenting.FunctionComment"/>
+</ruleset>
