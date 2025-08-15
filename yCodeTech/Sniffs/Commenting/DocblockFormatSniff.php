@@ -115,16 +115,29 @@ class DocblockFormatSniff implements Sniff
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
 
-                // Remove existing whitespace
+                // Remove existing whitespace between prev and @return
                 for ($i = $prev + 1; $i < $stackPtr; $i++) {
-                    if ($tokens[$i]['line'] === T_DOC_COMMENT_WHITESPACE) {
+                    if (
+                        $tokens[$i]['code'] === T_DOC_COMMENT_WHITESPACE ||
+                        $tokens[$i]['code'] === T_DOC_COMMENT_STAR
+                    ) {
                         $phpcsFile->fixer->replaceToken($i, '');
                     }
                 }
 
-                // Add empty line.
-                $indent = str_repeat(' ', $tokens[$stackPtr]['column']);
-                $phpcsFile->fixer->addContent($prev, $phpcsFile->eolChar . $indent . '*' . $phpcsFile->eolChar);
+                // Add exactly one empty line with proper indentation
+                // Find a reference star token to get the correct column position
+                $starColumn = 1; // Default fallback
+                for ($i = $stackPtr - 1; $i >= 0; $i--) {
+                    if ($tokens[$i]['code'] === T_DOC_COMMENT_STAR) {
+                        $starColumn = $tokens[$i]['column'];
+                        break;
+                    }
+                }
+                
+                $starIndent = str_repeat(' ', $starColumn - 1);
+                $newContent = $phpcsFile->eolChar . $starIndent . '*' . $phpcsFile->eolChar . $starIndent . '* ';
+                $phpcsFile->fixer->addContent($prev, $newContent);
                 $phpcsFile->fixer->endChangeset();
             }
         }
