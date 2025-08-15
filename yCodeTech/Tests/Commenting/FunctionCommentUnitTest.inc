@@ -8,7 +8,7 @@ class TestClass
 {
     /**
      * Function missing @return tag.
-     * 
+     *
      * @param string $input Input parameter
      */
     public function testMissingReturn($input)
@@ -18,9 +18,9 @@ class TestClass
 
     /**
      * Function with @return tag (should not be flagged).
-     * 
+     *
      * @param string $input Input parameter
-     * 
+     *
      * @return string
      */
     public function testWithReturn($input)
@@ -30,7 +30,7 @@ class TestClass
 
     /**
      * Void function (should not be flagged).
-     * 
+     *
      * @param string $message Message to display
      */
     public function testVoidFunction($message): void
@@ -40,7 +40,7 @@ class TestClass
 
     /**
      * Function that only echoes (should not be flagged).
-     * 
+     *
      * @param string $message Message to display
      */
     public function testEchoFunction($message)
@@ -50,7 +50,7 @@ class TestClass
 
     /**
      * Function with empty return (should not be flagged).
-     * 
+     *
      * @param string $condition Condition
      */
     public function testEmptyReturn($condition)
@@ -63,7 +63,7 @@ class TestClass
 
     /**
      * Generator function missing @return tag (should be flagged for iterable).
-     * 
+     *
      * @param array $items Items to iterate
      */
     public function testGeneratorMissingReturn($items)
@@ -75,7 +75,7 @@ class TestClass
 
     /**
      * Generator function with yield from missing @return tag (should be flagged).
-     * 
+     *
      * @param array $items Items to iterate
      */
     public function testGeneratorYieldFromMissingReturn($items)
@@ -85,9 +85,9 @@ class TestClass
 
     /**
      * Generator with @return iterable (should not be flagged).
-     * 
+     *
      * @param array $items Items to iterate
-     * 
+     *
      * @return iterable
      */
     public function testGeneratorWithReturn($items)

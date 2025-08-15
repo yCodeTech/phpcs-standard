@@ -43,7 +43,7 @@ class TestClass
      *
      * @return integer Should be int
      */
-    public function methodWithDocblock($flag) 
+    public function methodWithDocblock($flag)
     {
         return 1;
     }

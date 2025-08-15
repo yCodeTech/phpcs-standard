@@ -2,17 +2,17 @@
 
 /**
  * Test file for DisallowTypeLongNamesSniff - Docblock Types.
- * 
+ *
  * Tests detection of long type names in docblock comments.
  */
 
 /**
  * Function with long type names in docblocks.
- * 
- * @param boolean $flag Should be bool
- * @param integer $count Should be int
- * 
- * @return boolean Should be bool
+ *
+ * @param bool $flag Should be bool
+ * @param int $count Should be int
+ *
+ * @return bool Should be bool
  */
 function testDocblockTypes(bool $flag, int $count): bool
 {
@@ -21,29 +21,29 @@ function testDocblockTypes(bool $flag, int $count): bool
 
 /**
  * Class with long type in docblock.
- * 
- * @property integer $property Should be int
- * @property-read integer $foo Should be int
- * @property-write boolean $bar Should be bool
- * @method boolean isBool() Should be bool
+ *
+ * @property int $property Should be int
+ * @property-read int $foo Should be int
+ * @property-write bool $bar Should be bool
+ * @method bool isBool() Should be bool
  */
 class TestClass
 {
     /**
      * Class property with long type in docblock.
      *
-     * @var boolean Should be bool
+     * @var bool Should be bool
      */
     private bool property;
 
     /**
      * Method with long type in docblock.
-     * 
-     * @param boolean $flag Should be bool
-     * 
-     * @return integer Should be int
+     *
+     * @param bool $flag Should be bool
+     *
+     * @return int Should be int
      */
-    public function methodWithDocblock($flag) 
+    public function methodWithDocblock($flag)
     {
         return 1;
     }

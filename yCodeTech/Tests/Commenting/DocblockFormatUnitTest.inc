@@ -1,5 +1,7 @@
 <?php
 
+// @phpcs:disable Generic.Commenting.DocComment.MissingShort
+
 /**
  * Test input file for DocblockFormatSniff.
  */
@@ -8,7 +10,7 @@ class TestClass
 {
     /**
      * Function with spacing violations.
-     * 
+     *
      * @param    string   $name     Name parameter
      * @param string$value Value parameter
      * @return string
@@ -19,19 +21,19 @@ class TestClass
          * @var    string   $variable
          */
         $variable = 'test';
-        
+
         /**
          * @phpstan-param    string   $param
          * @psalm-param  string   $param
          */
-         
+
         /**
          * @throws    Exception   If error occurs
          * @see   SomeClass  For reference
          */
         return $name . $value;
     }
-    
+
     // Function with only return tag in docblock - should NOT be flagged.
     /**
      * @return string
@@ -40,10 +42,10 @@ class TestClass
     {
         return 'test';
     }
-    
+
     /**
      * Function with param and return - should be flagged for missing empty line.
-     * 
+     *
      * @param string $test
      * @return string
      */

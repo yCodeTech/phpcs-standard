@@ -1,5 +1,7 @@
 <?php
 
+// @phpcs:disable Generic.Commenting.DocComment.MissingShort
+
 /**
  * Test input file for DocblockFormatSniff.
  */
