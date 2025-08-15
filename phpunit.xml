@@ -16,7 +16,6 @@
     failOnNotice="true"
     failOnDeprecation="true"
     failOnPhpunitDeprecation="false"
-    requireCoverageMetadata="true"
 >
     <testsuites>
         <testsuite name="yCodeTech_Sniffs">
@@ -36,7 +35,6 @@
         </include>
         <exclude>
             <directory suffix="UnitTest.php">./yCodeTech/Tests/</directory>
-            <directory>./yCodeTech/TestUtils/</directory>
         </exclude>
     </source>
 
