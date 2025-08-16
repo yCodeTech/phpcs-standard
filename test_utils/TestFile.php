@@ -288,7 +288,6 @@ class TestClass
      *
      * The following should be fixed:
      * - All @ tags must have exactly 1 space between each tag elements (type, description, etc.).
-     * -
      *
      * @throws    Exception     If something goes wrong
      * @see       SomeClass     For more information
