@@ -29,9 +29,11 @@ class TestClass
     }
 
     /**
-     * Void function (should not be flagged).
+     * Void function with a `@return` tag.
      *
      * @param string $message Message to display
+     *
+     * @return void
      */
     public function testVoidFunction($message): void
     {

@@ -277,6 +277,34 @@ class TestClass
         echo "Continuing...";
     }
 
+    /**
+     * Function that returns void that has a `@return` tag (should be flagged).
+     *
+     * The following should be fixed:
+     * - The `@return` tag should be removed.
+     *
+     * @return void
+     */
+    public function testVoidFunctionWithDocblockReturn(): void
+    {
+        echo "Hello World";
+    }
+
+    /**
+     * Function that returns void implicitly that has a `@return` tag (should be flagged).
+     *
+     * The following should be fixed:
+     * - The `@return` tag should be removed.
+     *
+     * @param string $message Message to display
+     *
+     * @return void
+     */
+    public function testImplicitVoidFunctionWithDocblockReturn($message)
+    {
+        echo $message;
+    }
+
 
     /************************************
      * ALL OTHER @ TAGS FORMATTING TEST *

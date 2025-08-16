@@ -1,75 +1,115 @@
 <documentation title="Function Comment">
     <standard>
         <![CDATA[
-        Functions with void return type should not have @return tags, while all other functions must have explicit @return tags.
+        Non-void returning functions must have a @return docblock tag.
+
+        This rule enforces:
+
+        1. Functions with non-void return types (string, bool, etc.) must have a `@return` tag.
+        2. Functions with void return types must NOT have `@return` tags, except generator functions.
+        3. Generator functions must have a `@return` tag with type iterable.
+
+        Notes:
+
+        - Both typed and untyped functions are checked.
+        - Return types can be declared or inferred from function signature.
+        - Magic methods (e.g. __construct, __get, etc.) are exempt from requiring @return tags.
+        - Fixing `@return` tags will have the type `mixed`, and generator functions will have the type `iterable`; these should then be edited manually to specific types.
+        
+        ---
+
         ]]>
     </standard>
     <code_comparison>
-        <code title="Valid: No @return for void function">
+        <code title="✔️ Valid: @return tag for non-void function">
+            <![CDATA[
+/**
+ * Get formatted string.
+ *
+ * @param string $input The input string
+<em> *
+ * @return string</em>
+ */
+public function formatString(string $input): string
+{
+    return strtoupper($input);
+}
+            ]]>
+        </code>
+        <code title="❌ Invalid: Missing @return tag for non-void function">
+            <![CDATA[
+/**
+ * Get formatted string.
+ *
+ * @param string $input The input string<em>
+</em> */
+public function formatString(string $input): string
+{
+    return strtoupper($input);
+}
+            ]]>
+        </code>
+    </code_comparison>
+
+    <code_comparison>
+        <code title="✔️ Valid: No @return for void function">
             <![CDATA[
 /**
  * Process data without returning anything.
  *
- * @param <em>array $data</em> The data to process
- */
-public function processData(array $data): <em>void</em>
+ * @param array $data The data to process<em>
+</em> */
+public function processData(array $data): void
 {
     // Process data
 }
             ]]>
         </code>
-        <code title="Invalid: @return tag on void function">
+        <code title="❌ Invalid: @return tag on void function">
             <![CDATA[
 /**
  * Process data without returning anything.
  *
- * @param <em>array $data</em> The data to process
+ * @param array $data The data to process
+ *
  * <em>@return void</em>
  */
-public function processData(array $data): <em>void</em>
+public function processData(array $data): void
 {
     // Process data
 }
             ]]>
         </code>
     </code_comparison>
+
     <code_comparison>
-        <code title="Valid: @return tag for non-void function">
+        <code title="✔️ Valid: @return tag for generator function">
             <![CDATA[
 /**
  * Get formatted string.
  *
- * @param <em>string $input</em> The input string
- * <em>@return string</em>
+ * @param string $input The input string
+<em> *
+ * @return iterable</em>
  */
-public function formatString(string $input): <em>string</em>
+public function formatString(string $input)
 {
-    return strtoupper($input);
+    yield "Hello $input";
 }
             ]]>
         </code>
-        <code title="Invalid: Missing @return tag">
+        <code title="❌ Invalid: Missing @return tag for generator function">
             <![CDATA[
 /**
  * Get formatted string.
  *
- * @param <em>string $input</em> The input string
- */
-public function formatString(string $input): <em>string</em>
+ * @param string $input The input string<em>
+</em> */
+public function formatString(string $input)
 {
-    return strtoupper($input);
+    yield "Hello $input";
 }
             ]]>
         </code>
     </code_comparison>
-    <standard>
-        <![CDATA[
-        This rule enforces:
-        1. Functions with void return type must NOT have @return tags
-        2. All other functions (string, int, array, object, etc.) MUST have @return tags
-        3. Constructors (__construct) are exempt from @return requirements
-        4. Both typed and untyped functions are checked
-        5. Return type can be declared or inferred from function signature
-        ]]>
-    </standard>
 </documentation>

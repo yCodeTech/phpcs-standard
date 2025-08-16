@@ -31,7 +31,7 @@ class TestClass
     }
 
     /**
-     * Void function (should not be flagged).
+     * Void function with a `@return` tag.
      *
      * @param string $message Message to display
      */

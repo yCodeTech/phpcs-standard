@@ -90,6 +90,26 @@ class FunctionCommentSniff implements Sniff
                 $this->addReturnTag($phpcsFile, $commentEnd, $isGeneratorFunction ? 'iterable' : 'mixed');
             }
         }
+
+        // If function returns void (and is not a generator), it should NOT have @return tag
+        if ($hasVoidReturn && !$isGeneratorFunction && $hasReturnTag) {
+            // Find the @return tag position for error reporting
+            $returnTagPtr = false;
+            for ($i = $commentStart; $i <= $commentEnd; $i++) {
+                if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG && $tokens[$i]['content'] === '@return') {
+                    $returnTagPtr = $i;
+                    break;
+                }
+            }
+            
+            if ($returnTagPtr !== false) {
+                $error = 'Void function should not have @return tag';
+                $fix = $phpcsFile->addFixableError($error, $returnTagPtr, 'VoidReturnTagFound');
+                if ($fix === true) {
+                    $this->removeReturnTag($phpcsFile, $returnTagPtr);
+                }
+            }
+        }
     }
 
     /**
@@ -272,6 +292,53 @@ class FunctionCommentSniff implements Sniff
             . $baseIndent . '* @return ' . $returnType;
 
         $phpcsFile->fixer->addContent($lastContentLine, $newContent);
+        $phpcsFile->fixer->endChangeset();
+    }
+
+    /**
+     * Remove `@return` tag from docblock.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int $returnTagPtr The position of the @return tag.
+     *
+     * @return void
+     */
+    private function removeReturnTag(File $phpcsFile, $returnTagPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+        
+        $phpcsFile->fixer->beginChangeset();
+        
+        // Find all tokens on the @return line
+        $returnLine = $tokens[$returnTagPtr]['line'];
+        $tokensToRemove = [];
+        
+        // Collect all tokens on the @return line
+        for ($i = 0; $i < count($tokens); $i++) {
+            if ($tokens[$i]['line'] === $returnLine) {
+                $tokensToRemove[] = $i;
+            }
+        }
+        
+        // Check if there's an empty line before @return that should also be removed
+        $prevLine = $returnLine - 1;
+        
+        // Look for tokens on the previous line to see if it's an empty docblock line
+        for ($i = 0; $i < count($tokens); $i++) {
+            if ($tokens[$i]['line'] === $prevLine) {
+                $content = trim($tokens[$i]['content']);
+                if ($content === '*' || $content === '') {
+                    // This is an empty docblock line, include it for removal
+                    $tokensToRemove[] = $i;
+                }
+            }
+        }
+        
+        // Remove all collected tokens
+        foreach ($tokensToRemove as $tokenIndex) {
+            $phpcsFile->fixer->replaceToken($tokenIndex, '');
+        }
+        
         $phpcsFile->fixer->endChangeset();
     }
 }
