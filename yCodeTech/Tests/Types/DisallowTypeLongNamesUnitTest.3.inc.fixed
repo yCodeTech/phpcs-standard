@@ -1,21 +1,18 @@
 <?php
 
-// @phpcs:disable Generic.Commenting.DocComment.MissingShort
-
 /**
  * Test file for DisallowTypeLongNamesSniff - Type Casting.
  *
  * Tests detection of long type names in type casting.
  */
 
-// Global type casting with long forms
+// Global type casting with long names.
 $globalBool = (bool) true;
 $globalInt = (int) 123;
 
 // Type casting within functions
-/**
- * Type cast within global function.
- */
+
+// Long name type casts within global function.
 function testTypeCasting($value)
 {
     $bool = (bool) $value;
@@ -24,9 +21,7 @@ function testTypeCasting($value)
 
 class TestClass
 {
-    /**
-     * @return array<bool, int>
-     */
+    // Long name type casts within class method.
     public function methodWithTypeCasting($input)
     {
         $castedBool = (bool) $input;
@@ -36,7 +31,5 @@ class TestClass
             $localBool = (bool) false;
             $localInt = (int) 456;
         }
-
-        return [$castedBool, $castedInt];
     }
 }

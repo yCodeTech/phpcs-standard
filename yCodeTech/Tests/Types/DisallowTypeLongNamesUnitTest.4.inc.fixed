@@ -1,15 +1,14 @@
 <?php
 
-// @phpcs:disable Generic.Commenting.DocComment.MissingShort
-
 /**
  * Test file for DisallowTypeLongNamesSniff - Generic Types.
  *
  * Tests detection of long type names in generic type syntax.
  */
 
-// Generic types with long forms
 /**
+ * Generic types with long names.
+ *
  * @param array<bool> $bool Array Should be array<bool>
  * @param array<string, int> $map Should be array<string, int>
  * @param Collection<bool, int> $collection Should be Collection<bool, int>

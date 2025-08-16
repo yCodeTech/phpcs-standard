@@ -20,7 +20,7 @@ function testDocblockTypes(bool $flag, int $count): bool
 }
 
 /**
- * Class with long type in docblock.
+ * Class with long type names in docblock.
  *
  * @property integer $property Should be int
  * @property-read integer $foo Should be int
@@ -30,14 +30,14 @@ function testDocblockTypes(bool $flag, int $count): bool
 class TestClass
 {
     /**
-     * Class property with long type in docblock.
+     * Class property with long type name in docblock.
      *
      * @var boolean Should be bool
      */
     private bool $property;
 
     /**
-     * Method with long type in docblock.
+     * Method with long type names in docblock.
      *
      * @param boolean $flag Should be bool
      *

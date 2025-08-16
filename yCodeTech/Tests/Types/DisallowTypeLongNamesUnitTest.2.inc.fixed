@@ -1,6 +1,7 @@
 <?php
 
-// @phpcs:disable Generic.Commenting.DocComment.MissingShort
+// @phpcs:disable yCodeTech.Commenting.FunctionComment.MissingReturn
+// We're not concerned with docblocks here, so we can disable missing return violation.
 
 /**
  * Test file for DisallowTypeLongNamesSniff - Type Declarations.
@@ -15,29 +16,17 @@ class TestClass
     protected int $intProperty;
 
     // Function with type declaration errors
-    /**
-     * @return bool
-     */
     public function typeDeclarationErrors(bool $param1, int $param2): bool
     {
-        return true;
     }
 
-    // Nullable types with long forms
-    /**
-     * @return int|null
-     */
+    // Nullable types with long names
     public function nullableTypes(?bool $param): ?int
     {
-        return null;
     }
 
-    // Union types with long forms
-    /**
-     * @return string|bool
-     */
+    // Union types with long names
     public function unionTypes(bool|int $param): string|bool
     {
-        return "test";
     }
 }

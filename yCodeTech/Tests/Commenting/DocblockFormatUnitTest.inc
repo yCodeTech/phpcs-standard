@@ -13,6 +13,7 @@ class TestClass
      *
      * @param    string   $name     Name parameter
      * @param string$value Value parameter
+     *
      * @return string
      */
     public function testFunction($name, $value)
@@ -34,17 +35,8 @@ class TestClass
         return $name . $value;
     }
 
-    // Function with only return tag in docblock - should NOT be flagged.
     /**
-     * @return string
-     */
-    public function functionWithOnlyReturn()
-    {
-        return 'test';
-    }
-
-    /**
-     * Function with param and return - should be flagged for missing empty line.
+     * Function with missing empty line before `@return`.
      *
      * @param string $test
      * @return string

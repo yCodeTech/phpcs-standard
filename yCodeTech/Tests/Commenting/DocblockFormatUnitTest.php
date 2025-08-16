@@ -30,15 +30,14 @@ class DocblockFormatUnitTest extends AbstractSniffTestCase
     public function getErrorList()
     {
         return [
-            14 => 1,  // @param with extra spaces
-            15 => 1,  // @param with zero spaces
-            16 => 1,  // @return without empty line before
-            21 => 1,  // @var with multiple spaces
-            26 => 1,  // @phpstan-param with incorrect spacing
-            27 => 1,  // @psalm-param with incorrect spacing
-            31 => 1,  // @throws with incorrect spacing
-            32 => 1,  // @see with incorrect spacing
-            50 => 1,  // @return without empty line before (when @param exists)
+            14 => 1,  // @param with multiple extra spaces
+            15 => 1,  // @param with 0 spaces between type and variable
+            22 => 1,  // @var with multiple extra spaces
+            27 => 1,  // @phpstan-param with multiple extra spaces
+            28 => 1,  // @psalm-param with multiple extra spaces
+            32 => 1,  // @throws with multiple extra spaces
+            33 => 1,  // @see with multiple extra spaces
+            42 => 1,  // Missing empty line before @return
         ];
     }
 
