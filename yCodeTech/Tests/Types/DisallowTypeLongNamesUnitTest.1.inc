@@ -34,7 +34,7 @@ class TestClass
      *
      * @var boolean Should be bool
      */
-    private bool property;
+    private bool $property;
 
     /**
      * Method with long type in docblock.
