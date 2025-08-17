@@ -24,11 +24,9 @@ jobs:
 
     strategy:
       matrix:
-        php: ["7.2", "7.4", "8.0", "8.2", "8.4", "8.5"]
+        php: ["7.2", "7.4", "8.0", "8.2", "8.4"]
 
     name: "Lint: PHP ${{ matrix.php }}"
-
-    continue-on-error: ${{ matrix.php == '8.5' }}
 
     steps:
       - name: Checkout code
@@ -45,8 +43,6 @@ jobs:
       - name: Install Composer dependencies
         uses: "ramsey/composer-install@v3"
         with:
-          # For the PHP "8.5", we need to install with ignore platform reqs as not all dependencies may allow it yet.
-          composer-options: ${{ matrix.php == '8.5' && '--ignore-platform-req=php+' || '' }}
           # Bust the cache at least once a month - output format: YYYY-MM.
           custom-cache-suffix: $(date -u "+%Y-%m")
 
@@ -66,14 +62,11 @@ jobs:
         # @link https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix
         #
         # The matrix is set up so as not to duplicate the builds which are run for code coverage.
-        php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.5"]
+        php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
         phpcs_version: ["lowest", "stable", "4.x-dev"]
 
         include:
           # Add some builds with variations of the dependency versions.
-          # Note: the PHPCS low/stable + Utils stable combi is already run via the above matrix.
-          # And the PHPCS low + Utils low combi is run in the code coverage builds.
-          # So these are the only combis missing.
           - php: "8.4"
             phpcs_version: "stable"
 
@@ -87,15 +80,7 @@ jobs:
           - php: "8.2"
             phpcs_version: "4.x-dev"
 
-          # Experimental builds. These are allowed to fail.
-          - php: "8.5"
-            phpcs_version: "dev-master"
-          - php: "8.5"
-            phpcs_version: "4.x-dev"
-
     name: "Test: PHP ${{ matrix.php }} - PHPCS ${{ matrix.phpcs_version }}"
-
-    continue-on-error: ${{ matrix.php == '8.5' }}
 
     steps:
       - name: Checkout code
@@ -136,8 +121,6 @@ jobs:
       - name: Install Composer dependencies
         uses: "ramsey/composer-install@v3"
         with:
-          # For the PHP "8.5", we need to install with ignore platform reqs as not all dependencies may allow it yet.
-          composer-options: ${{ matrix.php == '8.5' && '--ignore-platform-req=php+' || '' }}
           # Bust the cache at least once a month - output format: YYYY-MM.
           custom-cache-suffix: $(date -u "+%Y-%m")
 
