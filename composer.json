@@ -17,7 +17,7 @@
         }
     ],
     "require": {
-        "php": ">=8.2",
+        "php": ">=7.2",
         "squizlabs/php_codesniffer": "^3.7||^4.0",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.1"
     },
