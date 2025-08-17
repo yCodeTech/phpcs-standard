@@ -38,7 +38,7 @@
         }
     },
     "scripts": {
-        "lint": "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git",
+        "lint": "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git --exclude test_utils",
         "cs": "@php ./vendor/bin/phpcs --standard=yCodeTech",
         "cbf": "@php ./vendor/bin/phpcbf --standard=yCodeTech",
         "test": [
