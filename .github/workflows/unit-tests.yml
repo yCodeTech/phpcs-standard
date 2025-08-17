@@ -131,11 +131,21 @@ jobs:
       - name: Composer info
         run: composer info
 
-      - name: Grab PHPCS version
-        id: phpcs_version
-        run: echo "VERSION=$(vendor/bin/phpcs --version | grep --only-matching --max-count=1 --extended-regexp '\b[0-9]+\.[0-9]+')" >> "$GITHUB_OUTPUT"
+      - name: Grab PHPUnit version
+        id: phpunit_version
+        run: echo "VERSION=$(vendor/bin/phpunit --version | grep --only-matching --max-count=1 --extended-regexp '\b[0-9]+\.[0-9]+')" >> "$GITHUB_OUTPUT"
+
+      - name: Determine PHPUnit config file to use
+        id: phpunit_config
+        shell: bash
+        run: |
+          if [ "${{ startsWith( steps.phpunit_version.outputs.VERSION, '11.' ) }}" == "true" ]; then
+            echo 'FILE=phpunit.xml' >> "$GITHUB_OUTPUT"
+          else
+            echo 'FILE=phpunit-lte9.xml' >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Run the unit tests
-        run: composer test
+        run: composer test -- -c ${{ steps.phpunit_config.outputs.FILE }}
         env:
           PHPCS_VERSION: ${{ matrix.phpcs_version }}
