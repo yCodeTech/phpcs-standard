@@ -5,7 +5,7 @@
     backupGlobals="true"
     beStrictAboutOutputDuringTests="true"
     beStrictAboutTestsThatDoNotTestAnything="false"
-    bootstrap="./vendor/squizlabs/php_codesniffer/tests/bootstrap.php"
+    bootstrap="./phpunit-bootstrap.php"
     convertErrorsToExceptions="true"
     convertWarningsToExceptions="true"
     convertNoticesToExceptions="true"
