@@ -7,6 +7,7 @@ on:
       - master
     paths-ignore:
       - "**.md"
+      - "**.xml"
   pull_request:
   # Allow manually triggering the workflow.
   workflow_dispatch:
@@ -65,7 +66,7 @@ jobs:
         php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
         phpcs_version: ["4.x-dev"]
 
-    name: "Test: PHP ${{ matrix.php }} - PHPCS ${{ matrix.phpcs_version }}"
+    name: "Test: PHP ${{ matrix.php }}"
 
     steps:
       - name: Checkout code
