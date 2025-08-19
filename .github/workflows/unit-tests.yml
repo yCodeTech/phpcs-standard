@@ -113,6 +113,8 @@ jobs:
         run: |
           if [ "${{ startsWith( steps.phpunit_version.outputs.VERSION, '11.' ) }}" == "true" ]; then
             echo 'FILE=phpunit.xml' >> "$GITHUB_OUTPUT"
+          elif [ "${{ startsWith( steps.phpunit_version.outputs.VERSION, '10.' ) }}" == "true" ]; then
+            echo 'FILE=phpunit.xml' >> "$GITHUB_OUTPUT"
           else
             echo 'FILE=phpunit-lte9.xml' >> "$GITHUB_OUTPUT"
           fi
