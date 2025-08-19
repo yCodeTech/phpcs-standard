@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "squizlabs/php_codesniffer": "^3.13||^4.0",
+        "squizlabs/php_codesniffer": "^3.13||^4.0@dev",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.1"
     },
     "require-dev": {
@@ -26,7 +26,6 @@
         "phpcsstandards/phpcsdevtools": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.4"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "yCodeTech\\": "yCodeTech/"
