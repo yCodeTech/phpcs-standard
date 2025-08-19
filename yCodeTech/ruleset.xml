@@ -15,20 +15,17 @@
 *                                                              *
 *        **********************************************        *
 *                                                              *
-*   This standard enforces the following rules:                  *
+*   This standard enforces the following rules:                *
 *                                                              *
-*   - Use `bool` type name instead of `boolean` in both       *
-*     docblocks and PHP type declarations.                    *
+*   - Use `bool` and `int` type names instead of `boolean`     *
+*     and `integer` in all code contexts.                      *
 *                                                              *
-*   - Use `int` type name instead of `integer` in both        *
-*     docblocks and PHP type declarations.                    *
+*   - Require 1 single empty line before `@return` tag.        *
 *                                                              *
-*   - Require 1 single empty line before `@return` tag.       *
+*   - Require 1 single space between all @-tags' elements      *
+*     (type, variable, etc.).                                  *
 *                                                              *
-*   - Require 1 single space between each all @-tags'         *
-*     elements (type, variable, etc.).                        *
-*                                                              *
-*   - Require a `@return` tag except when the return type is  *
+*   - Require a `@return` tag except when the return type is   *
 *     `void`.                                                  *
 *                                                              *
 ****************************************************************
@@ -42,39 +39,65 @@
     <!-- Show sniff codes -->
     <arg value="s"/>
 
+    <!-- yCodeTech sniffs are included by default, so no need to include them here. -->
 
-    <!-- Include base PSR-12 standard but exclude some rules -->
-    <rule ref="PSR12">
-        <!-- Disable namespace requirement -->
-        <exclude name="PSR1.Classes.ClassDeclaration.MissingNamespace"/>
-        <!-- Disable PSR12's type casts short names sniff, as we'll use our own implementation. -->
-        <exclude name="PSR12.Keywords.ShortFormTypeKeywords"/>
+    <!-- Cherrypick sniffs from other standards. -->
 
-        <!-- Disable Squiz's space after close brace sniff. Allows newlines in between if...else braces. -->
-        <exclude name="Squiz.ControlStructures.ControlSignature.SpaceAfterCloseBrace"></exclude>
-        <!-- Disable Generic's line endings sniff. Allows different EOL characters. -->
-        <exclude name="Generic.Files.LineEndings.InvalidEOLChar"></exclude>
-        <!-- Disable PSR2's end file newline sniff. -->
-        <exclude name="PSR2.Files.EndFileNewline.NoneFound"></exclude>
-
-    </rule>    
-    
-    <!-- Docblock formatting -->
+    <!-- Include Generic Docblock sniff, and exclude specific violations. -->
     <rule ref="Generic.Commenting.DocComment">
+        <!-- This is disabled because the indentation/spacing is fixed the yCodeTech standard. -->
         <exclude name="Generic.Commenting.DocComment.TagValueIndent"/>
+        
+        <!-- This is disabled because the it might interfere with yCodeTech's @return new line rules. So at the moment all non-param tags can be grouped with @param, but this may change in the future. -->
         <exclude name="Generic.Commenting.DocComment.NonParamGroup"/>
+
+        <!-- Allow other @tags to be first in a docblock. -->
+        <exclude name="Generic.Commenting.DocComment.ParamNotFirst"/>
     </rule>
 
-    <!-- Type hints -->
+    <!-- Line endings must be CRLF (\r\n) -->
+    <rule ref="Generic.Files.LineEndings">
+        <properties>
+            <property name="eolChar" value="\r\n" />
+        </properties>
+    </rule>
+
+    <!-- Type hints must be lowercase. -->
     <rule ref="Generic.PHP.LowerCaseType"/>
-    
-    <!-- Custom yCodeTech sniffs -->
-    <!-- Disallow long type names in both docblocks and PHP type declarations -->
-    <rule ref="yCodeTech.Types.DisallowTypeLongNames"/>
-    
-    <!-- Docblock formatting and spacing rules -->
-    <rule ref="yCodeTech.Commenting.DocblockFormat"/>
-    
-    <!-- Function comment requirements -->
-    <rule ref="yCodeTech.Commenting.FunctionComment"/>
+
+    <!-- Keywords must be lowercase. -->
+    <rule ref="Generic.PHP.LowerCaseKeyword"/>
+
+    <!-- `true`, `false` and `null` constants must always be lowercase. -->
+    <rule ref="Generic.PHP.LowerCaseConstant"/>
+
+    <!-- The code should use valid PHP syntax (ie. missing semicolons, etc.). -->
+    <rule ref="Generic.PHP.Syntax"/>
+
+    <!-- No superfluous (unnecessary) whitespace is allowed. -->
+    <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace"/>
+
+    <!-- Duplicate return tags are not allowed. -->
+    <rule ref="Squiz.Commenting.FunctionComment.DuplicateReturn"/>
+
+    <!-- The type in the @return tag is missing. -->
+    <rule ref="Squiz.Commenting.FunctionComment.MissingReturnType"/>
+
+    <!-- Exception type missing for @throws tag. -->
+    <rule ref="Squiz.Commenting.FunctionComment.InvalidThrows"/>
+
+    <!-- Parameter type missing for @param tag. -->
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamType"/>
+
+    <!-- Parameter name (variable) missing for @param tag. -->
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamName"/>
+
+    <!-- @param name casing must match the variable name casing. -->
+    <rule ref="Squiz.Commenting.FunctionComment.ParamNameNoCaseMatch"/>
+
+    <!-- @param comments must start with a capital letter. -->
+    <rule ref="Squiz.Commenting.FunctionComment.ParamCommentNotCapital"/>
+
+    <!-- @param tag missing for the function parameter. -->
+    <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag"/>
 </ruleset>
