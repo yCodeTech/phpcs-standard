@@ -4,7 +4,7 @@
 ![Minimum PHP Version](https://img.shields.io/packagist/dependency-v/yCodeTech/phpcs-standard/php?label=php)
 [![Unit Tests](https://github.com/yCodeTech/phpcs-standard/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/yCodeTech/phpcs-standard/actions/workflows/unit-tests.yml)
 
-A custom PHP_CodeSniffer standard that enforces strict type and docblock rules with comprehensive auto-fixing capabilities.
+A custom [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/tree/4.x) standard that enforces strict type and docblock rules with comprehensive auto-fixing capabilities.
 
 ## Requirements
 
