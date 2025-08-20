@@ -200,7 +200,7 @@ Functions that return a value must have a `@return` docblock tag.
 
 -   Fixes with a <code>mixed</code> return type
 
--   Magic methods (e.g. <code>**construct</code>, <code>**get</code>, etc.) are exempt.
+-   Magic methods (e.g. <code>\_\_construct</code>, <code>\_\_get</code>, etc.) are exempt.
 
   </td>
   </tr>
