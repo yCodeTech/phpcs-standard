@@ -198,7 +198,7 @@ Functions that return a value must have a `@return` docblock tag.
     <td>✔️</td>
      <td>
 
--   Fixes with a <code>mixed</code> return type
+-   Fixes with a <code>mixed</code> return type.
 
 -   Magic methods (e.g. <code>\_\_construct</code>, <code>\_\_get</code>, etc.) are exempt.
 
@@ -214,7 +214,11 @@ Functions that return a value must have a `@return` docblock tag.
     <td>Generator functions must have a <code>@return</code> tag.
     </td>
     <td>✔️</td>
-    <td>Fixes with a <code>iterable</code> return type</td>
+    <td>
+    
+- Fixes with an <code>iterable</code> return type.
+
+</td>
   </tr>
 </table>
 
@@ -347,7 +351,7 @@ public function formatString(string $input)
 
 ### yCodeTech.Types.DisallowTypeLongNames
 
-Long type names are disallowed. Short names must be used in all contexts.
+Long type names are disallowed. Short names must be used in docblocks, type declarations, and type casting.
 
 <table>
   <tr>
@@ -363,8 +367,20 @@ Long type names are disallowed. Short names must be used in all contexts.
     <td>✔️</td>
   </tr>
   <tr>
-    <th>Contexts</th>
-    <td>Docblocks, type declarations, union and nullable types, type casting, generic types</td>
+    <th>Notes</th>
+    <td>
+    
+-   Docblocks and type declarations include union and nullable types.
+
+-   Docblock types can also include generic types.
+
+-   Types will only be fixed in these regular docblocks tags: `@param`, `@return`, `@var`, `@property`, `@method`.
+    Also any other tags that contain the regular tags; example: `@property-read`, `@phpstan-param`, `@psalm-return`.
+
+-   Any types in docblock descriptions will not get fixed.
+
+    </td>
+
   </tr>
 </table>
 
@@ -372,9 +388,9 @@ Long type names are disallowed. Short names must be used in all contexts.
 
 `yCodeTech.Types.DisallowTypeLongNames.DocblockType`
 
-`yCodeTech.Types.DisallowTypeLongNames.TypeCast`
-
 `yCodeTech.Types.DisallowTypeLongNames.TypeDeclaration`
+
+`yCodeTech.Types.DisallowTypeLongNames.TypeCast`
 
 #### Examples:
 
