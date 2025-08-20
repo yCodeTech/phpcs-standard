@@ -1,29 +1,26 @@
 <documentation title="Disallow Type Long Names">
     <standard>
         <![CDATA[
-        Long type names are disallowed. Short names must be used in all contexts.
+        Long type names are disallowed. Short names must be used in docblocks, type declarations, and type casting.
 
         This rule enforces:
 
         1. Use `bool` instead of `boolean`.
         2. Use `int` instead of `integer`.
 
-        Contexts:
-        - Docblocks
-        - Type declarations
-        - Union types
-        - Nullable types
-        - Type casting
-        - Generic types
+        Notes:
 
-        Applies to:
+        - Docblocks and type declarations include union and nullable types.
 
-        1. Regular docblock tags that contain types (`@param`, `@return`, `@var`, `@property`, `@method`) and any others that contain these regular tags (`@property-read`, `@property-write`, `@phpstan-*`, `@psalm-*`, etc.)
-        2. Docblock generic types: array<`integer`, `boolean`> → array<`int`, `bool`>, array<`boolean`> → array<`bool`>, Collection<`integer`> → Collection<`int`>, etc.
-        3. Function/method/closure parameter and return type declarations
-        4. Class property type declarations
-        5. Nullable and union types: `?boolean` → `?bool`, `?integer` → `?int`, `boolean|string` → `bool|string`, `integer|string` → `int|string`
-        6. Type casting: `(boolean)` → `(bool)`, `(integer)` → `(int)`
+        - Docblock types can also include generic types.
+
+        - Types will only be fixed in these regular docblocks tags: `@param`, `@return`, `@var`, `@property`, `@method`.
+        Also any other tags that contain the regular tags; example: `@property-read`, `@phpstan-param`, `@psalm-return`.
+
+        - Any types in docblock descriptions will not get fixed.
+
+        ---
+
         ]]>
     </standard>
     <code_comparison>
