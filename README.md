@@ -374,8 +374,13 @@ Long type names are disallowed. Short names must be used in docblocks, type decl
 
 -   Docblock types can also include generic types.
 
--   Types will only be fixed in these regular docblocks tags: `@param`, `@return`, `@var`, `@property`, `@method`.
-    Also any other tags that contain the regular tags; example: `@property-read`, `@phpstan-param`, `@psalm-return`.
+-   Types will only be fixed in these regular docblocks tags:
+
+    `@param`, `@return`, `@var`, `@property`, `@method`.
+
+    Also any other tags that contain the regular tags; example:
+
+    `@property-read`, `@phpstan-param`, `@psalm-return`.
 
 -   Any types in docblock descriptions will not get fixed.
 
