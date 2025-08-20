@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   lint:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' }} || ${{ github.ref == 'refs/heads/phpcs3' }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -53,7 +53,7 @@ jobs:
 
   #### TEST STAGE ####
   test:
-    if: ${{ github.ref == 'refs/heads/master' }}
+    if: ${{ github.ref == 'refs/heads/master' }} || ${{ github.ref == 'refs/heads/phpcs3' }}
     runs-on: ubuntu-latest
 
     strategy:
