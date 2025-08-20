@@ -54,7 +54,10 @@
             "@test"
         ],
         "list-tokens": "@php ./vendor/bin/phpcs --standard=PHPCSDebug ./test_utils/TestFile.php",
-        "check-completeness": "@php ./vendor/bin/phpcs-check-feature-completeness ./yCodeTech"
+        "check-completeness": "@php ./vendor/bin/phpcs-check-feature-completeness ./yCodeTech",
+        "generate-docs": [
+            "@php ./vendor/bin/phpcs --sniffs=yCodeTech.Commenting.DocblockFormat,yCodeTech.Commenting.FunctionComment,yCodeTech.Types.DisallowTypeLongNames --generator=markdown > docs.md"
+        ]
     },
     "scripts-descriptions": {
         "lint": "Run PHP Parallel Lint to check for syntax errors in PHP files.",
