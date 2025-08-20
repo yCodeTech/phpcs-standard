@@ -8,8 +8,7 @@ A custom PHP_CodeSniffer standard that enforces strict type and docblock rules w
 
 ## Requirements
 
--   PHP 7.2 or higher
--   PHP_CodeSniffer 4.x-dev
+-   `php >= 7.2`
 
 ## Installation
 
