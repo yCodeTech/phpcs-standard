@@ -1,12 +1,20 @@
 <documentation title="Disallow Type Long Names">
     <standard>
         <![CDATA[
-        Long type names are disallowed. Short names must be used in all contexts: docblocks, generic types, type declarations, and type casting.
+        Long type names are disallowed. Short names must be used in all contexts.
 
         This rule enforces:
 
-        1. Use `bool` instead of `boolean` in ALL contexts
-        2. Use `int` instead of `integer` in ALL contexts
+        1. Use `bool` instead of `boolean`.
+        2. Use `int` instead of `integer`.
+
+        Contexts:
+        - Docblocks
+        - Type declarations
+        - Union types
+        - Nullable types
+        - Type casting
+        - Generic types
 
         Applies to:
 
