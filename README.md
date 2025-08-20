@@ -1,6 +1,6 @@
 # yCodeTech PHPCS Standard
 
-[![Latest Stable Version](https://img.shields.io/github/v/release/yCodeTech/phpcs-standard?label=Stable)](https://github.com/PHPCSStandards/PHP_CodeSniffer/releases)
+[![Latest Stable Version](https://img.shields.io/github/v/release/yCodeTech/phpcs-standard?label=Stable)](https://packagist.org/packages/ycodetech/phpcs-standard)
 ![Minimum PHP Version](https://img.shields.io/packagist/dependency-v/yCodeTech/phpcs-standard/php?label=php)
 [![Unit Tests](https://github.com/yCodeTech/phpcs-standard/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/yCodeTech/phpcs-standard/actions/workflows/unit-tests.yml)
 
