@@ -3,7 +3,7 @@
         <![CDATA[
         Enforces proper spacing and formatting in docblocks:
         1. All docblock tags must have exactly `1 space` between each element.
-        2. Type and variable in any tags must have exactly `1 space` between them.
+        2. The type and variable in any tag must be separated by a `space`.
         3. `@return` tags must be preceded by exactly `1 empty line`.
 
         ]]>

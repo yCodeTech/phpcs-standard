@@ -11,7 +11,7 @@
         Applies to:
 
         1. Regular docblock tags that contain types (`@param`, `@return`, `@var`, `@property`, `@method`) and any others that contain these regular tags (`@property-read`, `@property-write`, `@phpstan-*`, `@psalm-*`, etc.)
-        2. Docblock generic types: `array<integer, boolean>` → `array<int, bool>`, `array<boolean>` → `array<bool>`, `Collection<integer>` → `Collection<int>`, etc.
+        2. Docblock generic types: array<`integer`, `boolean`> → array<`int`, `bool`>, array<`boolean`> → array<`bool`>, Collection<`integer`> → Collection<`int`>, etc.
         3. Function/method/closure parameter and return type declarations
         4. Class property type declarations
         5. Nullable and union types: `?boolean` → `?bool`, `?integer` → `?int`, `boolean|string` → `bool|string`, `integer|string` → `int|string`
@@ -24,6 +24,7 @@
 /**
  * @param <em>bool</em> $isValid
  * @psalm-param <em>bool</em> $isValid
+ *
  * @return <em>int</em>
  */
             ]]>
@@ -33,6 +34,7 @@
 /**
  * @param <em>boolean</em> $isValid
  * @psalm-param <em>boolean</em> $isValid
+ *
  * @return <em>integer</em>
  */
             ]]>
@@ -45,7 +47,7 @@
  * @param Collection<<em>int</em>> $numbers
  * @param Map<string, <em>bool</em>> $settings
  * @param array<string, <em>int</em>> $counts
- * @param array< <em>bool</em>, <em>int</em>> $counts
+ * @param array<<em>bool</em>, <em>int</em>> $counts
  */
             ]]>
         </code>
@@ -55,7 +57,7 @@
  * @param Collection<<em>integer</em>> $numbers
  * @param Map<string, <em>boolean</em>> $settings
  * @param array<string, <em>integer</em>> $counts
- * @param array< <em>boolean</em>, <em>integer</em>> $counts
+ * @param array<<em>boolean</em>, <em>integer</em>> $counts
  */
             ]]>
         </code>
@@ -80,10 +82,7 @@ protected <em>integer</em> $userCount;
             <![CDATA[
 function foo(<em>bool</em> $flag): <em>int</em> {
     $callback = function(<em>bool</em> $isValid): <em>int</em> {
-        return $isValid ? 10 : 5;
     };
-    
-    return $callback($flag);
 }
             ]]>
         </code>
@@ -91,10 +90,7 @@ function foo(<em>bool</em> $flag): <em>int</em> {
             <![CDATA[
 function foo(<em>boolean</em> $flag): <em>integer</em> {
     $callback = function(<em>boolean</em> $isValid): <em>integer</em> {
-        return $isValid ? 10 : 5;
     };
-    
-    return $callback($flag);
 }
             ]]>
         </code>
@@ -103,14 +99,12 @@ function foo(<em>boolean</em> $flag): <em>integer</em> {
         <code title="✔️ Valid: Short name nullable and union types">
             <![CDATA[
 function foo(?<em>bool</em> $flag, <em>bool</em>|string $var): ?<em>int</em> {
-    return $flag ? 10 : null;
 }
             ]]>
         </code>
         <code title="❌ Invalid: Long name nullable and union types">
             <![CDATA[
 function foo(?<em>boolean</em> $flag, <em>boolean</em>|string $var): ?<em>integer</em> {
-    return $flag ? 10 : null;
 }
             ]]>
         </code>

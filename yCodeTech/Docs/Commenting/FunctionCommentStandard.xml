@@ -1,19 +1,19 @@
 <documentation title="Function Comment">
     <standard>
         <![CDATA[
-        Non-void returning functions must have a @return docblock tag.
+        Functions that return a value must have a `@return` docblock tag.
 
         This rule enforces:
 
-        1. Functions with non-void return types (string, bool, etc.) must have a `@return` tag.
-        2. Functions with void return types must NOT have `@return` tags, except generator functions.
-        3. Generator functions must have a `@return` tag with type iterable.
+        1. Functions with `non-void` return types (`string`, `bool`, etc.) must have a `@return` tag.
+        2. Functions with `void` return types must NOT have `@return` tags, except generator functions.
+        3. Generator functions must have a `@return` tag.
 
         Notes:
 
         - Both typed and untyped functions are checked.
         - Return types can be declared or inferred from function signature.
-        - Magic methods (e.g. __construct, __get, etc.) are exempt from requiring @return tags.
+        - Magic methods (e.g. `__construct`, `__get`, etc.) are exempt from requiring `@return` tags.
         - Fixing `@return` tags will have the type `mixed`, and generator functions will have the type `iterable`; these should then be edited manually to specific types.
         
         ---
@@ -32,7 +32,6 @@
  */
 public function formatString(string $input): string
 {
-    return strtoupper($input);
 }
             ]]>
         </code>
@@ -45,7 +44,6 @@ public function formatString(string $input): string
 </em> */
 public function formatString(string $input): string
 {
-    return strtoupper($input);
 }
             ]]>
         </code>
@@ -61,7 +59,6 @@ public function formatString(string $input): string
 </em> */
 public function processData(array $data): void
 {
-    // Process data
 }
             ]]>
         </code>
@@ -76,7 +73,6 @@ public function processData(array $data): void
  */
 public function processData(array $data): void
 {
-    // Process data
 }
             ]]>
         </code>
