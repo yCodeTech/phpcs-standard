@@ -1,5 +1,9 @@
 <?php
 
+if (\defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+    \define('PHP_CODESNIFFER_IN_TESTS', true);
+}
+
 /*
  * Load the necessary PHPCS files.
  */
@@ -25,7 +29,7 @@ if ($phpcsDir !== false
     && \file_exists($phpcsDir . '/tests/bootstrap.php')
 ) {
     require_once $phpcsDir . '/autoload.php';
-    require_once $phpcsDir . '/tests/bootstrap.php'; // PHPUnit 6.x+ support.
+    require_once $phpcsDir . '/tests/bootstrap.php';
 } else {
     echo 'Uh oh... can\'t find PHPCS.
 
