@@ -86,7 +86,7 @@ jobs:
           - php: "8.2"
             phpcs_version: "4.x-dev"
 
-    name: "Test: PHP ${{ matrix.php }}"
+    name: "Test: PHP ${{ matrix.php }} - PHPCS ${{ matrix.phpcs_version }}"
 
     steps:
       - name: Checkout code
@@ -110,8 +110,8 @@ jobs:
           ini-values: ${{ steps.set_ini.outputs.PHP_INI }}
           coverage: none
 
-      - name: "Composer: set PHPCS version for tests (dev)"
-        if: ${{ contains( matrix.phpcs_version, 'dev') }}
+      - name: "Composer: set PHPCS version for tests (dev/specific version)"
+        if: ${{ matrix.phpcs_version != 'lowest' && matrix.phpcs_version != 'stable' }}
         run: composer require squizlabs/php_codesniffer:"${{ matrix.phpcs_version }}" --no-update --no-scripts --no-interaction
 
       - name: "Composer: use lock file when necessary"
@@ -133,26 +133,18 @@ jobs:
       - name: Composer info
         run: composer info
 
-      - name: Grab PHPUnit version
-        id: phpunit_version
-        run: echo "VERSION=$(vendor/bin/phpunit --version | grep --only-matching --max-count=1 --extended-regexp '\b[0-9]+\.[0-9]+')" >> "$GITHUB_OUTPUT"
+      - name: Grab PHPCS version
+        id: phpcs_version
+        # yamllint disable-line rule:line-length
+        run: echo "VERSION=$(vendor/bin/phpcs --version | grep --only-matching --max-count=1 --extended-regexp '\b[0-9]+\.[0-9]+')" >> "$GITHUB_OUTPUT"
 
-      - name: "DEBUG: Show grabbed PHPUnit version"
-        run: echo ${{ steps.phpunit_version.outputs.VERSION }}
+      - name: "DEBUG: Show grabbed PHPCS version"
+        run: echo ${{ steps.phpcs_version.outputs.VERSION }}
 
-      - name: Determine PHPUnit config file to use
-        id: phpunit_config
-        shell: bash
-        run: |
-          if [ "${{ startsWith( steps.phpunit_version.outputs.VERSION, '11.' ) }}" == "true" ]; then
-            echo 'FILE=phpunit.xml' >> "$GITHUB_OUTPUT"
-          elif [ "${{ startsWith( steps.phpunit_version.outputs.VERSION, '10.' ) }}" == "true" ]; then
-            echo 'FILE=phpunit.xml' >> "$GITHUB_OUTPUT"
-          else
-            echo 'FILE=phpunit-lte9.xml' >> "$GITHUB_OUTPUT"
-          fi
+      - name: Run the unit tests (PHPCS 3.x)
+        if: ${{ startsWith( steps.phpcs_version.outputs.VERSION, '3.' ) }}
+        run: composer test-phpcs3
 
-      - name: Run the unit tests
-        run: composer test -- -c ${{ steps.phpunit_config.outputs.FILE }}
-        env:
-          PHPCS_VERSION: ${{ matrix.phpcs_version }}
+      - name: Run the unit tests (PHPCS 4.x)
+        if: ${{ startsWith( steps.phpcs_version.outputs.VERSION, '4.' ) }}
+        run: composer test-phpcs4

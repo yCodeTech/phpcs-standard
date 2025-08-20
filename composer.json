@@ -22,7 +22,7 @@
         "dealerdirect/phpcodesniffer-composer-installer": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5||^9.6||^10.5||^11.5",
+        "phpunit/phpunit": "^8.5||^9.6",
         "phpcsstandards/phpcsdevtools": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.4"
     },
@@ -40,9 +40,13 @@
         "lint": "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git --exclude test_utils",
         "cs": "@php ./vendor/bin/phpcs --standard=yCodeTech",
         "cbf": "@php ./vendor/bin/phpcbf --standard=yCodeTech",
-        "test": [
+        "test-phpcs4": [
             "Composer\\Config::disableProcessTimeout",
             "@php ./vendor/bin/phpunit --no-coverage"
+        ],
+        "test-phpcs3": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php ./vendor/bin/phpunit --filter yCodeTech --no-coverage ./vendor/squizlabs/php_codesniffer/tests/AllTests.php"
         ],
         "cs-test-file": "@cs ./test_utils/TestFile.php",
         "fix-test-file": "@cbf ./test_utils/TestFile.php",
