@@ -51,6 +51,7 @@ Enforces proper spacing and formatting in docblocks.
 #### Violation Codes:
 
 `yCodeTech.Commenting.DocblockFormat.TagSpacing`
+
 `yCodeTech.Commenting.DocblockFormat.ReturnSpacing`
 
 #### Examples:
@@ -220,6 +221,7 @@ Functions that return a value must have a `@return` docblock tag.
 #### Violation Codes:
 
 `yCodeTech.Commenting.FunctionComment.MissingReturn`
+
 `yCodeTech.Commenting.FunctionComment.VoidReturnTagFound`
 
 #### Examples:
@@ -369,7 +371,9 @@ Long type names are disallowed. Short names must be used in all contexts.
 #### Violation Codes:
 
 `yCodeTech.Types.DisallowTypeLongNames.DocblockType`
+
 `yCodeTech.Types.DisallowTypeLongNames.TypeCast`
+
 `yCodeTech.Types.DisallowTypeLongNames.TypeDeclaration`
 
 #### Examples:
