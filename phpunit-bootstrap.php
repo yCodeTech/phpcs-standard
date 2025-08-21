@@ -1,5 +1,9 @@
 <?php
 
+if (\defined('PHP_CODESNIFFER_IN_TESTS') === false) {
+    \define('PHP_CODESNIFFER_IN_TESTS', true);
+}
+
 /*
  * Load the necessary PHPCS files.
  */
@@ -25,7 +29,7 @@ if ($phpcsDir !== false
     && \file_exists($phpcsDir . '/tests/bootstrap.php')
 ) {
     require_once $phpcsDir . '/autoload.php';
-    require_once $phpcsDir . '/tests/bootstrap.php'; // PHPUnit 6.x+ support.
+    require_once $phpcsDir . '/tests/bootstrap.php';
 } else {
     echo 'Uh oh... can\'t find PHPCS.
 
@@ -36,4 +40,14 @@ for that PHPCS install.
 ';
 
     exit(1);
+}
+
+// Alias the PHPCS 3.x test case to the PHPCS 4.x name.
+if (class_exists('PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest') === true
+    && class_exists('PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase') === false
+) {
+    class_alias(
+        'PHP_CodeSniffer\Tests\Standards\AbstractSniffUnitTest',
+        'PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase'
+    );
 }

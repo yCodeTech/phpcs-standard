@@ -2,6 +2,7 @@
 
 [![Latest Stable Version](https://img.shields.io/github/v/release/yCodeTech/phpcs-standard?label=Stable)](https://packagist.org/packages/ycodetech/phpcs-standard)
 ![Minimum PHP Version](https://img.shields.io/packagist/dependency-v/yCodeTech/phpcs-standard/php?label=php)
+![PHPCS Version](https://img.shields.io/packagist/dependency-v/yCodeTech/phpcs-standard/squizlabs/php_codesniffer?label=PHPCS)
 [![Unit Tests](https://github.com/yCodeTech/phpcs-standard/actions/workflows/unit-tests.yml/badge.svg)](https://github.com/yCodeTech/phpcs-standard/actions/workflows/unit-tests.yml)
 
 A custom [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/tree/4.x) standard that enforces opinionated type and docblock rules with auto-fixing capabilities.

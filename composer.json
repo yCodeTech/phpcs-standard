@@ -18,11 +18,11 @@
     ],
     "require": {
         "php": ">=7.2",
-        "squizlabs/php_codesniffer": "^4.0@dev",
+        "squizlabs/php_codesniffer": "^3.13||^4.0@dev",
         "dealerdirect/phpcodesniffer-composer-installer": "^1.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.5||^9.6||^10.5||^11.5",
+        "phpunit/phpunit": "^8.5||^9.6",
         "phpcsstandards/phpcsdevtools": "^1.0",
         "php-parallel-lint/php-parallel-lint": "^1.4"
     },
@@ -40,9 +40,13 @@
         "lint": "@php ./vendor/php-parallel-lint/php-parallel-lint/parallel-lint . -e php --exclude vendor --exclude .git --exclude test_utils",
         "cs": "@php ./vendor/bin/phpcs --standard=yCodeTech",
         "cbf": "@php ./vendor/bin/phpcbf --standard=yCodeTech",
-        "test": [
+        "test-phpcs4": [
             "Composer\\Config::disableProcessTimeout",
             "@php ./vendor/bin/phpunit --no-coverage"
+        ],
+        "test-phpcs3": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php ./vendor/bin/phpunit --filter yCodeTech --no-coverage ./vendor/squizlabs/php_codesniffer/tests/AllTests.php"
         ],
         "cs-test-file": "@cs ./test_utils/TestFile.php",
         "fix-test-file": "@cbf ./test_utils/TestFile.php",
@@ -51,7 +55,7 @@
         "test-all": [
             "@cs-test-file",
             "@cs-tests",
-            "@test"
+            "@test-phpcs4"
         ],
         "list-tokens": "@php ./vendor/bin/phpcs --standard=PHPCSDebug ./test_utils/TestFile.php",
         "check-completeness": "@php ./vendor/bin/phpcs-check-feature-completeness ./yCodeTech",
@@ -61,12 +65,13 @@
         "lint": "Run PHP Parallel Lint to check for syntax errors in PHP files.",
         "cs": "Run PHPCS to check for coding standards violations.",
         "cbf": "Run PHPCBF to fix coding standards violations.",
-        "test": "Run PHPUnit tests without code coverage.",
+        "test-phpcs4": "PHPCS 4.x: Run PHPUnit tests without code coverage.",
+        "test-phpcs3": "PHPCS 3.x: Run PHPUnit tests without code coverage.",
         "cs-test-file": "Run PHPCS on the test file.",
         "fix-test-file": "Run PHPCBF on the test file.",
         "restore-test-file": "Restore the test file to its original state.",
         "cs-tests": "Run PHPCS on all sniff unit tests.",
-        "test-all": "Run @cs-test-file, @cs-tests, and @test in sequence.",
+        "test-all": "Run @cs-test-file, @cs-tests, and @test-phpcs4 in sequence.",
         "list-tokens": "List all tokens used in the test file.",
         "check-completeness": "Check the completeness of the PHPCS standard.",
         "generate-docs": "Generate markdown documentation for the PHPCS standard."

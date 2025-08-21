@@ -1,51 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.5/phpunit.xsd"
+    xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/7.5/phpunit.xsd"
     backupGlobals="true"
-    beStrictAboutOutputDuringTests="true"
-    beStrictAboutTestsThatDoNotTestAnything="false"
     bootstrap="./phpunit-bootstrap.php"
-    cacheDirectory=".phpunit.cache"
-    displayDetailsOnTestsThatTriggerErrors="true"
-    displayDetailsOnTestsThatTriggerWarnings="false"
-    displayDetailsOnTestsThatTriggerNotices="true"
-    displayDetailsOnTestsThatTriggerDeprecations="true"
-    displayDetailsOnPhpunitDeprecations="false"
-    failOnWarning="false"
-    failOnNotice="true"
-    failOnDeprecation="true"
-    failOnPhpunitDeprecation="false"
->
+    beStrictAboutTestsThatDoNotTestAnything="false"
+    convertErrorsToExceptions="true"
+    convertWarningsToExceptions="true"
+    convertNoticesToExceptions="true"
+    convertDeprecationsToExceptions="true"
+    colors="true"
+    forceCoversAnnotation="true">
+
     <testsuites>
-        <testsuite name="yCodeTech_Sniffs">
-            <directory>./yCodeTech/Tests/</directory>
+        <testsuite name="yCodeTech">
+            <directory suffix="UnitTest.php">./yCodeTech/Tests/</directory>
         </testsuite>
     </testsuites>
 
-    <groups>
-        <exclude>
-            <group>CBF</group>
-        </exclude>
-    </groups>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./yCodeTech/Sniffs/</directory>
+        </whitelist>
+    </filter>
 
-    <source>
-        <include>
-            <directory suffix=".php">./yCodeTech/</directory>
-        </include>
-        <exclude>
-            <directory suffix="UnitTest.php">./yCodeTech/Tests/</directory>
-        </exclude>
-    </source>
-
-    <coverage includeUncoveredFiles="true">
-        <report>
-            <clover outputFile="build/logs/clover.xml"/>
-            <text outputFile="php://stdout" showOnlySummary="true"/>
-        </report>
-    </coverage>
-
-    <php>
-        <env name="PHP_CODESNIFFER_CBF" value="0"/>
-    </php>
+    <logging>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+    </logging>
 </phpunit>
