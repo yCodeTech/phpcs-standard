@@ -55,7 +55,7 @@
         "test-all": [
             "@cs-test-file",
             "@cs-tests",
-            "@test"
+            "@test-phpcs4"
         ],
         "list-tokens": "@php ./vendor/bin/phpcs --standard=PHPCSDebug ./test_utils/TestFile.php",
         "check-completeness": "@php ./vendor/bin/phpcs-check-feature-completeness ./yCodeTech",
@@ -65,12 +65,13 @@
         "lint": "Run PHP Parallel Lint to check for syntax errors in PHP files.",
         "cs": "Run PHPCS to check for coding standards violations.",
         "cbf": "Run PHPCBF to fix coding standards violations.",
-        "test": "Run PHPUnit tests without code coverage.",
+        "test-phpcs4": "PHPCS 4.x: Run PHPUnit tests without code coverage.",
+        "test-phpcs3": "PHPCS 3.x: Run PHPUnit tests without code coverage.",
         "cs-test-file": "Run PHPCS on the test file.",
         "fix-test-file": "Run PHPCBF on the test file.",
         "restore-test-file": "Restore the test file to its original state.",
         "cs-tests": "Run PHPCS on all sniff unit tests.",
-        "test-all": "Run @cs-test-file, @cs-tests, and @test in sequence.",
+        "test-all": "Run @cs-test-file, @cs-tests, and @test-phpcs4 in sequence.",
         "list-tokens": "List all tokens used in the test file.",
         "check-completeness": "Check the completeness of the PHPCS standard.",
         "generate-docs": "Generate markdown documentation for the PHPCS standard."
