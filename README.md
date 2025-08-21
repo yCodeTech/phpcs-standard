@@ -10,6 +10,7 @@ A custom [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/tre
 ## Requirements
 
 -   `php >= 7.2`
+-   `squizlabs/php_codesniffer 3.13+ || 4.x`
 
 ## Installation
 
