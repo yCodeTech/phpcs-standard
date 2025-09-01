@@ -65,6 +65,21 @@ class FunctionCommentSniff implements Sniff
             return;
         }
 
+        // Check if this docblock actually belongs to this function
+        // There should be no other significant tokens between the docblock and the function
+        $tokenAfterComment = $phpcsFile->findNext(
+            [T_WHITESPACE, T_COMMENT, T_PUBLIC, T_PRIVATE, T_PROTECTED, T_STATIC, T_FINAL, T_ABSTRACT],
+            ($commentEnd + 1),
+            $stackPtr,
+            true
+        );
+        
+        if ($tokenAfterComment !== false && $tokenAfterComment !== $stackPtr) {
+            // There are other tokens between the docblock and the function,
+            // so this docblock doesn't belong to this function. So the function doesn't have a docblock, and found a previous function's docblock instead. Skipping.
+            return;
+        }
+
         $commentStart = $tokens[$commentEnd]['comment_opener'];
         // Check if function returns void
         $hasVoidReturn = $this->hasVoidReturn($phpcsFile, $stackPtr);

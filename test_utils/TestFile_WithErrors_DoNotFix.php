@@ -75,6 +75,19 @@ class TestClass
      */
     private boolean|string $bar;
 
+    private function testFunctionWithoutDocblock(): string {
+        // Function without a docblock, a required `@return` tag should NOT be added to
+        // the previous docblock ($bar) (should NOT be flagged).
+        return 'Hello World';
+    }
+
+    private function anotherFunctionWithoutDocblock(): int {
+        // Function without a docblock, a required `@return` tag should NOT be added to
+        // the previous docblock ($bar) (should NOT be flagged).
+        return 42;
+    }
+
+
 
     /***************
      * TYPES TESTS *
