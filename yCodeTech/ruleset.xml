@@ -100,4 +100,7 @@
 
     <!-- @param tag missing for the function parameter. -->
     <rule ref="Squiz.Commenting.FunctionComment.MissingParamTag"/>
+
+    <!-- Function docblock is missing. -->
+    <rule ref="PEAR.Commenting.FunctionComment.Missing"/>
 </ruleset>
