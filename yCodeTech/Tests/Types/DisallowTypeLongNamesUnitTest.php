@@ -6,7 +6,7 @@ use PHP_CodeSniffer\Tests\Standards\AbstractSniffTestCase;
 
 /**
  * Unit test class for DisallowTypeLongNamesSniff
- * 
+ *
  * The code to test are split into several .inc files to cover different scenarios.
  * As documented here: https://github.com/PHPCSStandards/PHP_CodeSniffer/blob/4.x/.github/CONTRIBUTING.md#multiple-test-case-files
  */
@@ -33,13 +33,13 @@ class DisallowTypeLongNamesUnitTest extends AbstractSniffTestCase
                     12 => 1,  // @param boolean
                     13 => 1,  // @param integer
                     15 => 1,  // @return boolean
-                    
+
                     // Class docblock errors
                     25 => 1,  // @property integer
                     26 => 1,  // @property-read integer
                     27 => 1,  // @property-write boolean
                     28 => 1,  // @method boolean
-                    
+
                     // Property and method docblock errors
                     35 => 1,  // @var boolean
                     42 => 1,  // @param boolean
@@ -60,7 +60,7 @@ class DisallowTypeLongNamesUnitTest extends AbstractSniffTestCase
                     // Global type casting errors
                     10 => 1,  // (boolean) cast
                     11 => 1,  // (integer) cast
-                    
+
                     // Function type casting errors
                     18 => 1,  // (boolean) cast
                     19 => 1,  // (integer) cast
@@ -79,7 +79,7 @@ class DisallowTypeLongNamesUnitTest extends AbstractSniffTestCase
                     13 => 1,  // @param array<string, integer>
                     14 => 2,  // @param Collection<boolean, integer>
                     16 => 2,  // @return Map<integer, boolean>
-                    
+
                     // Complex generic errors
                     26 => 2,  // @param Generator<integer, boolean>
                     27 => 1,  // @param Promise<boolean>

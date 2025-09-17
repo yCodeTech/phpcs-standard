@@ -36,6 +36,7 @@ composer test-all
 ### Option 2: Manual Testing
 
 Test individual sniffs:
+
 ```bash
 # Test DisallowTypeLongNamesSniff
 vendor/bin/phpcs --standard=./yCodeTech/ruleset.xml yCodeTech/Tests/Types/DisallowTypeLongNamesUnitTest.inc
@@ -50,6 +51,7 @@ vendor/bin/phpcs --standard=./yCodeTech/ruleset.xml yCodeTech/Tests/Commenting/F
 ### Option 3: Auto-fix Testing
 
 Test that violations can be automatically fixed:
+
 ```bash
 # Copy test file and run auto-fix
 cp yCodeTech/Tests/Types/DisallowTypeLongNamesUnitTest.inc temp_test.php
@@ -60,54 +62,59 @@ rm temp_test.php
 ## Test Coverage
 
 ### DisallowTypeLongNamesSniff Tests
-- ✅ `boolean` → `bool` conversion in @param tags
-- ✅ `integer` → `int` conversion in @param tags  
-- ✅ `boolean` → `bool` conversion in @return tags
-- ✅ `integer` → `int` conversion in @return tags
-- ✅ `boolean` → `bool` conversion in @var tags
-- ✅ `integer` → `int` conversion in @var tags
-- ✅ `boolean` → `bool` conversion in @property tags
-- ✅ `integer` → `int` conversion in @property tags
-- ✅ Static analysis tags (@phpstan-*, @psalm-*)
-- ✅ Union types (boolean|string → bool|string)
-- ✅ Function parameter type declarations
-- ✅ Function return type declarations
-- ✅ Class property type declarations
-- ✅ Type casting (boolean) → (bool), (integer) → (int)
-- ✅ Nullable types (?boolean → ?bool)
-- ✅ Context-aware detection (no duplicates)
+
+-   ✅ `boolean` → `bool` conversion in @param tags
+-   ✅ `integer` → `int` conversion in @param tags
+-   ✅ `boolean` → `bool` conversion in @return tags
+-   ✅ `integer` → `int` conversion in @return tags
+-   ✅ `boolean` → `bool` conversion in @var tags
+-   ✅ `integer` → `int` conversion in @var tags
+-   ✅ `boolean` → `bool` conversion in @property tags
+-   ✅ `integer` → `int` conversion in @property tags
+-   ✅ Static analysis tags (@phpstan-\*, @psalm-\*)
+-   ✅ Union types (boolean|string → bool|string)
+-   ✅ Function parameter type declarations
+-   ✅ Function return type declarations
+-   ✅ Class property type declarations
+-   ✅ Type casting (boolean) → (bool), (integer) → (int)
+-   ✅ Nullable types (?boolean → ?bool)
+-   ✅ Context-aware detection (no duplicates)
 
 ### DocblockFormatSniff Tests
-- ✅ Exactly 1 space between @param elements
-- ✅ Zero space detection and fixing
-- ✅ Multiple space detection and fixing  
-- ✅ Empty line before @return tag
-- ✅ All @ tag types (param, return, var, throws, see, etc.)
-- ✅ Static analysis tag spacing
+
+-   ✅ Exactly 1 space between @param elements
+-   ✅ Zero space detection and fixing
+-   ✅ Multiple space detection and fixing
+-   ✅ Empty line before @return tag
+-   ✅ All @ tag types (param, return, var, throws, see, etc.)
+-   ✅ Static analysis tag spacing
 
 ### FunctionCommentSniff Tests
-- ✅ Missing @return tag detection
-- ✅ Auto-insertion of @return mixed
-- ✅ Void function detection (explicit void)
-- ✅ Implicit void function detection (echo-only)
-- ✅ Empty return statement detection
-- ✅ Correct indentation for auto-inserted tags
+
+-   ✅ Missing @return tag detection
+-   ✅ Auto-insertion of @return mixed
+-   ✅ Void function detection (explicit void)
+-   ✅ Implicit void function detection (echo-only)
+-   ✅ Empty return statement detection
+-   ✅ Correct indentation for auto-inserted tags
 
 ## Expected Results
 
 Each test file contains deliberate violations that should be detected by the corresponding sniff. The test classes define the exact line numbers where errors should occur.
 
 When running the tests, you should see:
-- **All violations detected** on the expected lines
-- **Auto-fixing capabilities** working correctly
-- **No false positives** on correct code
+
+-   **All violations detected** on the expected lines
+-   **Auto-fixing capabilities** working correctly
+-   **No false positives** on correct code
 
 ## Integration Testing
 
 The `StandardIntegrationTest` provides comprehensive testing of all sniffs working together, ensuring:
-- No conflicts between sniffs
-- Proper violation detection across all rule types
-- Consistent behavior of the entire standard
+
+-   No conflicts between sniffs
+-   Proper violation detection across all rule types
+-   Consistent behaviour of the entire standard
 
 ## Adding New Tests
 

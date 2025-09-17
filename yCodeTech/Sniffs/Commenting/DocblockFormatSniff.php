@@ -41,8 +41,6 @@ class DocblockFormatSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the
      *                                               stack passed in $tokens.
-     *
-     * @return void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -63,13 +61,11 @@ class DocblockFormatSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the @return token.
-     *
-     * @return void
      */
     private function checkReturnEmptyLine(File $phpcsFile, $stackPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        
+
         // First, check if there are any other @ tags before this @return
         $hasOtherTags = false;
         $docBlockStart = $phpcsFile->findPrevious([T_DOC_COMMENT_OPEN_TAG], $stackPtr);
@@ -81,12 +77,12 @@ class DocblockFormatSniff implements Sniff
                 }
             }
         }
-        
+
         // If there are no other tags before @return, don't require empty line
         if (!$hasOtherTags) {
             return;
         }
-        
+
         // Find the previous non-whitespace token
         $prev = $phpcsFile->findPrevious([T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STAR], ($stackPtr - 1), null, true);
         if ($prev === false) {
@@ -134,7 +130,7 @@ class DocblockFormatSniff implements Sniff
                         break;
                     }
                 }
-                
+
                 $starIndent = str_repeat(' ', $starColumn - 1);
                 $newContent = $phpcsFile->eolChar . $starIndent . '*' . $phpcsFile->eolChar . $starIndent . '* ';
                 $phpcsFile->fixer->addContent($prev, $newContent);
@@ -148,8 +144,6 @@ class DocblockFormatSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the @ tag token.
-     *
-     * @return void
      */
     private function checkTagSpacing(File $phpcsFile, $stackPtr)
     {
@@ -198,10 +192,10 @@ class DocblockFormatSniff implements Sniff
 
         // Replace all spaces that are 2 or more consecutive spaces, with a single space
         $normalizedContent = preg_replace('/( ){2,}/', ' ', $content);
-        
+
         // Fix missing space between type and variable
         $normalizedContent = preg_replace('/^([^\s]+)(\$\w+)/', '$1 $2', $normalizedContent);
-        
+
         // Check if content needs normalization
         if ($content !== $normalizedContent) {
             $needsFixing = true;
@@ -212,13 +206,13 @@ class DocblockFormatSniff implements Sniff
             $fix = $phpcsFile->addFixableError($error, $contentToken, 'TagSpacing');
             if ($fix === true) {
                 $phpcsFile->fixer->beginChangeset();
-                
+
                 // If there was a whitespace token, replace it and normalize content
                 if ($tokens[$next]['code'] === T_DOC_COMMENT_WHITESPACE) {
                     $phpcsFile->fixer->replaceToken($next, ' ');
                     $phpcsFile->fixer->replaceToken($contentToken, $normalizedContent);
                 }
-                
+
                 $phpcsFile->fixer->endChangeset();
             }
         }

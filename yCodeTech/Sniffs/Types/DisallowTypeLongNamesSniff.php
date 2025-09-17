@@ -48,7 +48,7 @@ class DisallowTypeLongNamesSniff implements Sniff
 
     /**
      * Returns an array of tokens this test wants to listen for.
-     * 
+     *
      * Once PHP_CodeSniffer encounters one of these tokens, it calls the process method.
      *
      * @return array<int>
@@ -70,8 +70,6 @@ class DisallowTypeLongNamesSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the stack.
-     *
-     * @return void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -107,8 +105,6 @@ class DisallowTypeLongNamesSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the stack.
-     *
-     * @return void
      */
     private function processDocblockTag(File $phpcsFile, $stackPtr)
     {
@@ -156,8 +152,6 @@ class DisallowTypeLongNamesSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the stack.
-     *
-     * @return void
      */
     private function processFunctionTypes(File $phpcsFile, $stackPtr)
     {
@@ -212,8 +206,6 @@ class DisallowTypeLongNamesSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the stack.
-     *
-     * @return void
      */
     private function processPropertyType(File $phpcsFile, $stackPtr)
     {
@@ -222,7 +214,7 @@ class DisallowTypeLongNamesSniff implements Sniff
         // Look backwards to find the visibility keyword.
         $visibilityTokens = [T_PUBLIC, T_PRIVATE, T_PROTECTED, T_STATIC, T_VAR];
         $visibilityPtr = $phpcsFile->findPrevious($visibilityTokens, $stackPtr - 1);
-        
+
         if ($visibilityPtr === false) {
             return;
         }
@@ -251,8 +243,7 @@ class DisallowTypeLongNamesSniff implements Sniff
      * @param int $stackPtr The position of the type token.
      * @param string $context The context (parameter, return, property).
      * @param array $data Data to format the error message with.
-     *
-     * @return void
+     * @param string|null $docblockTagName The docblock tag name if applicable.
      */
     private function checkTypeToken(File $phpcsFile, $stackPtr, $context, $docblockTagName = null)
     {
@@ -261,7 +252,7 @@ class DisallowTypeLongNamesSniff implements Sniff
         if (isset($this->processedTokens[$filename][$stackPtr])) {
             return;
         }
-        
+
         // Mark this token as processed
         $this->processedTokens[$filename][$stackPtr] = true;
 
@@ -276,14 +267,14 @@ class DisallowTypeLongNamesSniff implements Sniff
         foreach ($extractedTypes as $extractedType) {
             // Get the short type name from the mapping.
             $shortType = $this->typeNames[$extractedType];
-            
+
             // This pattern matches for both simple types and types within generic type syntax,
             // using word boundaries to avoid partial matches.
             $pattern = '/\b' . preg_quote($extractedType, '/') . '\b/i';
 
             // Replace long name type with short name in the entire content.
             $replacedContent = preg_replace($pattern, $shortType, $replacedContent);
-            
+
             // Double-check that replacement actually happened, by comparing the original
             // content with the replaced content.
             // If replacement occurred, we will report an error.
@@ -311,8 +302,6 @@ class DisallowTypeLongNamesSniff implements Sniff
      * @param string $context The context (parameter, return, property, etc.).
      * @param string|null $docblockTagName The docblock tag name if applicable.
      * @param string $replacedContent The replacement content.
-     *
-     * @return void
      */
     private function reportAndFixError(
         File $phpcsFile,
