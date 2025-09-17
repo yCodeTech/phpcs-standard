@@ -53,6 +53,10 @@
             "Composer\\Config::disableProcessTimeout",
             "@php ./vendor/bin/phpunit --filter yCodeTech --no-coverage ./vendor/squizlabs/php_codesniffer/tests/AllTests.php"
         ],
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php -r \"echo 'Determining PHPCS version...\n'; $version = shell_exec('vendor/bin/phpcs --version 2>nul || vendor\\\\bin\\\\phpcs.bat --version'); if ($version && is_string($version) && preg_match('/([0-9]+)\\./', $version, $matches)) { $major = $matches[1]; } else { $major = '3'; } $script = ($major >= 4) ? 'test-phpcs4' : 'test-phpcs3'; echo 'Running ' . $script . '...' . \"\"\n\"\"; system('composer run-script ' . $script);\""
+        ],
         "cs-test-file": "@cs ./test_utils/TestFile.php",
         "fix-test-file": "@cbf ./test_utils/TestFile.php",
         "restore-test-file": "bash ./test_utils/restore_errors.sh",
@@ -72,6 +76,7 @@
         "cbf": "Run PHPCBF to fix coding standards violations.",
         "test-phpcs4": "PHPCS 4.x: Run PHPUnit tests without code coverage.",
         "test-phpcs3": "PHPCS 3.x: Run PHPUnit tests without code coverage.",
+        "test": "Run the appropriate PHPUnit composer script based on the installed PHPCS version, (test-phpcs4 or test-phpcs3).",
         "cs-test-file": "Run PHPCS on the test file.",
         "fix-test-file": "Run PHPCBF on the test file.",
         "restore-test-file": "Restore the test file to its original state.",
