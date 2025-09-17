@@ -50,11 +50,9 @@ class FunctionCommentSniff implements Sniff
             return;
         }
 
-        // Skip magic methods and constructors/destructors
+        // Get the function name for later processing
         $functionName = $tokens[$namePtr]['content'];
-        if (substr($functionName, 0, 2) === '__') {
-            return;
-        }
+        $isMagicMethod = substr($functionName, 0, 2) === '__';
 
         // Find the docblock for this function
         $commentEnd = $phpcsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr - 1));
@@ -90,6 +88,11 @@ class FunctionCommentSniff implements Sniff
             }
         }
 
+        // Skip magic methods unless they are void magic methods that should be processed
+        if ($isMagicMethod && !$this->shouldProcessMagicMethod($functionName)) {
+            return;
+        }
+
         // Check if the function is a generator.
         // If so, then it should have @return tag with type iterable.
         $isGeneratorFunction = $this->isGeneratorFunction($phpcsFile, $stackPtr);
@@ -116,8 +119,8 @@ class FunctionCommentSniff implements Sniff
             }
 
             if ($returnTagPtr !== false) {
-                $error = 'Void function should not have @return tag';
-                $fix = $phpcsFile->addFixableError($error, $returnTagPtr, 'VoidReturnTagFound');
+                $error = 'Void function (%s) should not have @return tag';
+                $fix = $phpcsFile->addFixableError($error, $returnTagPtr, 'VoidReturnTagFound', [$functionName]);
                 if ($fix === true) {
                     $this->removeReturnTag($phpcsFile, $returnTagPtr);
                 }
@@ -249,6 +252,32 @@ class FunctionCommentSniff implements Sniff
         }
 
         return false;
+    }
+
+    /**
+     * Check if a magic method should be processed.
+     *
+     * Only void magic methods should be processed to flag unnecessary @return void tags.
+     * Magic methods that return values should be skipped entirely.
+     *
+     * @param string $functionName The name of the function.
+     *
+     * @return bool
+     */
+    private function shouldProcessMagicMethod($functionName)
+    {
+        // Magic methods that are typically void and should be processed for @return void violations
+        $voidMagicMethods = [
+            '__construct',
+            '__destruct',
+            '__clone',
+            '__set',
+            '__unset',
+            '__wakeup',
+            '__unserialize',
+        ];
+
+        return in_array($functionName, $voidMagicMethods, true);
     }
 
     /**

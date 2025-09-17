@@ -210,14 +210,25 @@ Functions that return a value must have a `@return` docblock tag (nested anonymo
     <td>Functions with <code>void</code> return types must NOT have <code>@return</code> tags, except generator functions.
     </td>
     <td>✔️</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>Generator functions must have a <code>@return</code> tag.
-    </td>
-    <td>✔️</td>
     <td>
     
+-   Most magic methods are exempt, except for those that return `void`:
+<code>\_\_construct</code>, 
+<code>\_\_destruct</code>, 
+<code>\_\_clone</code>, 
+<code>\_\_set</code>, 
+<code>\_\_unset</code>, 
+<code>\_\_wakeup</code>, and
+<code>\_\_unserialize</code>.
+
+  </td>
+</tr>
+<tr>
+  <td>Generator functions must have a <code>@return</code> tag.
+  </td>
+  <td>✔️</td>
+  <td>
+
 - Fixes with an <code>iterable</code> return type.
 
 </td>

@@ -365,6 +365,42 @@ class TestClass
         echo $message;
     }
 
+    /*****************************************
+     * VOID MAGIC METHODS WITH @RETURN TESTS *
+     *****************************************/
+
+    /**
+     * Construct magic method with unnecessary `@return void` tag (should be flagged).
+     *
+     * The following should be fixed:
+     * - The `@return` tag should be removed.
+     *
+     * @return void
+     */
+    public function __construct() {
+    }
+
+    /**
+     * Destruct magic method with unnecessary `@return void` tag (should be flagged).
+     *
+     * The following should be fixed:
+     * - The `@return` tag should be removed.
+     *
+     * @return void
+     */
+    public function __destruct() {
+    }
+
+    /**
+     * Set magic method with unnecessary `@return void` tag (should be flagged).
+     *
+     * The following should be fixed:
+     * - The `@return` tag should be removed.
+     *
+     * @return void
+     */
+    public function __set($name, $value) {
+    }
 
     /************************************
      * ALL OTHER @ TAGS FORMATTING TEST *
