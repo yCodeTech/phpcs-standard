@@ -217,6 +217,24 @@ class TestClass
         return "Hello World";
     }
 
+    /**
+     * Function with an @ tag that has no content, with another function's docblock below it.
+     *
+     * The `testTagWithNoContentContinued` function's docblock below should
+     * not be considered as part of the `@param` in the docblock below
+     * (should NOT be flagged for incorrect `TagSpacing`).
+     *
+     * @param
+     */
+    public function testTagWithNoContent() {
+    }
+
+    /**
+	 * Test function continued from above (should NOT be flagged for incorrect `TagSpacing`).
+	 */
+    public function testTagWithNoContentContinued() {
+    }
+
 
     /*************************
      * MISSING @RETURN TESTS *

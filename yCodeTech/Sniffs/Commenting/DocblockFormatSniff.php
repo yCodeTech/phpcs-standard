@@ -155,8 +155,14 @@ class DocblockFormatSniff implements Sniff
     {
         $tokens = $phpcsFile->getTokens();
 
-        // Check spacing between @ tag and its content
-        $next = $phpcsFile->findNext([T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STRING], ($stackPtr + 1));
+        // Find the docblock boundaries to ensure we don't go beyond the current docblock
+        $docBlockEnd = $phpcsFile->findNext([T_DOC_COMMENT_CLOSE_TAG], ($stackPtr + 1));
+        if ($docBlockEnd === false) {
+            return;
+        }
+
+        // Check spacing between @ tag and its content (within same docblock only)
+        $next = $phpcsFile->findNext([T_DOC_COMMENT_WHITESPACE, T_DOC_COMMENT_STRING], ($stackPtr + 1), $docBlockEnd);
         if ($next === false) {
             return;
         }
@@ -173,9 +179,9 @@ class DocblockFormatSniff implements Sniff
             if ($whitespaceContent !== ' ') {
                 $needsFixing = true;
             }
-            
-            // Move to next token which should be the string
-            $contentToken = $phpcsFile->findNext(T_DOC_COMMENT_STRING, ($next + 1));
+
+            // Move to next token which should be the string (within same docblock)
+            $contentToken = $phpcsFile->findNext(T_DOC_COMMENT_STRING, ($next + 1), $docBlockEnd);
             if ($contentToken === false) {
                 return;
             }
