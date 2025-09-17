@@ -185,7 +185,7 @@ Enforces proper spacing and formatting in docblocks.
 
 ### yCodeTech.Commenting.FunctionComment
 
-Functions that return a value must have a `@return` docblock tag.
+Functions that return a value must have a `@return` docblock tag (nested anonymous function and closure returns will be ignored).
 
 <table>
   <tr>

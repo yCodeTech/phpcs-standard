@@ -247,8 +247,13 @@ class TestClass
         yield 1;
     }
 
+    /***********************
+     * VOID FUNCTION TESTS *
+     ***********************/
+
     /**
-     * Function that returns void with an explicit `void` typing (should NOT be flagged).
+     * Function that returns void with an explicit `void` typing
+     * (should NOT be flagged for missing `@return` tag).
      *
      * The following should NOT be fixed:
      * - A `@return` tag should not be added for an explicit `void` return.
@@ -262,7 +267,7 @@ class TestClass
 
     /**
      * Function that returns void implicitly, ie. no return statement in the body
-     * (should NOT be flagged).
+     * (should NOT be flagged for missing `@return` tag).
      *
      * The following should NOT be fixed:
      * - A `@return` tag should not be added for an implicit `void` return.
@@ -275,10 +280,11 @@ class TestClass
     }
 
     /**
-     * Function with empty return statement (should NOT be flagged).
+     * Function with empty return statement
+     * (should NOT be flagged for missing `@return` tag).
      *
      * The following should NOT be fixed:
-     * - A `@return` tag should not be added for an implicit `void` return.
+     * - A `@return` tag should not be added for an empty `return`.
      *
      * @param string $condition Some condition
      */
@@ -289,6 +295,47 @@ class TestClass
         }
         echo "Continuing...";
     }
+
+    /**
+     * Function that returns void implicitly and has a nested closure that returns a value
+     * (should NOT be flagged for missing `@return` tag).
+     *
+     * The following should NOT be fixed:
+     * - A `@return` tag should not be added for a `void` function that has a
+     *   nested returnable closure.
+     */
+    function testVoidFunctionWithNestedClosure()
+    {
+        $array = [1, 2, 3];
+
+        // This closure returns a value, but it's not in the immediate function scope
+        $result = array_map(function($item) {
+            return $item * 2; // This return should be ignored
+        }, $array);
+
+        echo "Result: " . implode(', ', $result);
+    }
+
+    /**
+     * Function that returns void implicitly and has a nested anonymous function that returns a
+     * value (should NOT be flagged for missing `@return` tag).
+     *
+     * The following should NOT be fixed:
+     * - A `@return` tag should not be added for a `void` function that has a
+     *   nested returnable anonymous function.
+     */
+    function testVoidFunctionWithAnonymousFunction()
+    {
+        $callback = function($value) {
+            return strtoupper($value); // This return should be ignored
+        };
+
+        $callback('test');
+    }
+
+    /*************************************
+     * VOID FUNCTIONS WITH @RETURN TESTS *
+     *************************************/
 
     /**
      * Function that returns void that has a `@return` tag (should be flagged).

@@ -39,8 +39,6 @@ class FunctionCommentSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $stackPtr The position of the current token in the
      *                                                   stack passed in $tokens.
-     *
-     * @return void
      */
     public function process(File $phpcsFile, $stackPtr)
     {
@@ -73,7 +71,7 @@ class FunctionCommentSniff implements Sniff
             $stackPtr,
             true
         );
-        
+
         if ($tokenAfterComment !== false && $tokenAfterComment !== $stackPtr) {
             // There are other tokens between the docblock and the function,
             // so this docblock doesn't belong to this function. So the function doesn't have a docblock, and found a previous function's docblock instead. Skipping.
@@ -116,7 +114,7 @@ class FunctionCommentSniff implements Sniff
                     break;
                 }
             }
-            
+
             if ($returnTagPtr !== false) {
                 $error = 'Void function should not have @return tag';
                 $fix = $phpcsFile->addFixableError($error, $returnTagPtr, 'VoidReturnTagFound');
@@ -191,6 +189,12 @@ class FunctionCommentSniff implements Sniff
         // Look for return statements within the function scope
         $returnPtr = $scopeOpener;
         while (($returnPtr = $phpcsFile->findNext(T_RETURN, $returnPtr + 1, $scopeCloser)) !== false) {
+            // Check if this return statement is inside a nested function/closure
+            if ($this->isReturnInNestedFunction($phpcsFile, $returnPtr, $scopeOpener, $scopeCloser)) {
+                // Skip this return statement as it belongs to a nested function
+                continue;
+            }
+
             // Check what follows the return statement (skip whitespace)
             $nextToken = $phpcsFile->findNext(T_WHITESPACE, $returnPtr + 1, null, true);
 
@@ -206,6 +210,45 @@ class FunctionCommentSniff implements Sniff
         // 2. Only "return;" statements found (without values)
         // Both cases mean the function implicitly returns void
         return true;
+    }
+
+    /**
+     * Check if a return statement is inside a nested function/closure.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int $returnPtr The position of the return statement.
+     * @param int $functionScopeOpener The scope opener of the parent function.
+     * @param int $functionScopeCloser The scope closer of the parent function.
+     *
+     * @return bool
+     */
+    private function isReturnInNestedFunction(File $phpcsFile, $returnPtr, $functionScopeOpener, $functionScopeCloser)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Look backwards from the return statement to find any nested function/closure
+        $searchPtr = $returnPtr;
+        while ($searchPtr > $functionScopeOpener) {
+            $searchPtr = $phpcsFile->findPrevious([T_FUNCTION, T_CLOSURE], $searchPtr - 1, $functionScopeOpener);
+
+            if ($searchPtr === false) {
+                // No nested function found between return and parent function start
+                return false;
+            }
+
+            // Check if this nested function's scope contains our return statement
+            $nestedScopeOpener = $tokens[$searchPtr]['scope_opener'] ?? null;
+            $nestedScopeCloser = $tokens[$searchPtr]['scope_closer'] ?? null;
+
+            if ($nestedScopeOpener !== null && $nestedScopeCloser !== null) {
+                if ($returnPtr > $nestedScopeOpener && $returnPtr < $nestedScopeCloser) {
+                    // The return statement is inside this nested function's scope
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -245,8 +288,6 @@ class FunctionCommentSniff implements Sniff
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $commentEnd The position of the docblock closing tag.
      * @param string $returnType The return type to use.
-     *
-     * @return void
      */
     private function addReturnTag(File $phpcsFile, $commentEnd, $returnType)
     {
@@ -315,29 +356,27 @@ class FunctionCommentSniff implements Sniff
      *
      * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
      * @param int $returnTagPtr The position of the @return tag.
-     *
-     * @return void
      */
     private function removeReturnTag(File $phpcsFile, $returnTagPtr)
     {
         $tokens = $phpcsFile->getTokens();
-        
+
         $phpcsFile->fixer->beginChangeset();
-        
+
         // Find all tokens on the @return line
         $returnLine = $tokens[$returnTagPtr]['line'];
         $tokensToRemove = [];
-        
+
         // Collect all tokens on the @return line
         for ($i = 0; $i < count($tokens); $i++) {
             if ($tokens[$i]['line'] === $returnLine) {
                 $tokensToRemove[] = $i;
             }
         }
-        
+
         // Check if there's an empty line before @return that should also be removed
         $prevLine = $returnLine - 1;
-        
+
         // Look for tokens on the previous line to see if it's an empty docblock line
         for ($i = 0; $i < count($tokens); $i++) {
             if ($tokens[$i]['line'] === $prevLine) {
@@ -348,12 +387,12 @@ class FunctionCommentSniff implements Sniff
                 }
             }
         }
-        
+
         // Remove all collected tokens
         foreach ($tokensToRemove as $tokenIndex) {
             $phpcsFile->fixer->replaceToken($tokenIndex, '');
         }
-        
+
         $phpcsFile->fixer->endChangeset();
     }
 }
