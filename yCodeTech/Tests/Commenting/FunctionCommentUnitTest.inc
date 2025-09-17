@@ -29,6 +29,14 @@ class TestClass
     }
 
     /**
+     * Constructor method with a `@return` tag.
+     *
+     * @return void
+     */
+    public function __construct() {
+    }
+
+    /**
      * Generator function missing iterable @return tag
      *
      * @param array $items Items to iterate

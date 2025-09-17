@@ -5,7 +5,7 @@
 
         This rule enforces:
 
-        1. Functions with `non-void` return types (`string`, `bool`, etc.) must have a `@return` tag.
+        1. Functions with `non-void` return types (`string`, `bool`, etc.) must have a `@return` tag (nested anonymous function and closure returns will be ignored).
         2. Functions with `void` return types must NOT have `@return` tags, except generator functions.
         3. Generator functions must have a `@return` tag.
 
@@ -14,6 +14,7 @@
         - Both typed and untyped functions are checked.
         - Return types can be declared or inferred from function signature.
         - Magic methods (e.g. `__construct`, `__get`, etc.) are exempt from requiring `@return` tags.
+        - Most magic methods are exempt from having `@return` tags removed, except those that return `void`: `__construct`, `__destruct`, `__clone`, `__set`, `__unset`, `__wakeup`, and `__unserialize`.
         - Fixing `@return` tags will have the type `mixed`, and generator functions will have the type `iterable`; these should then be edited manually to specific types.
         
         ---
@@ -72,6 +73,31 @@ public function processData(array $data): void
  * <em>@return void</em>
  */
 public function processData(array $data): void
+{
+}
+            ]]>
+        </code>
+    </code_comparison>
+
+    <code_comparison>
+        <code title="✔️ Valid: No @return for void constructor magic method">
+            <![CDATA[
+/**
+ * Constructor method.<em>
+</em> */
+public function __construct()
+{
+}
+            ]]>
+        </code>
+        <code title="❌ Invalid: @return tag on void constructor magic method">
+            <![CDATA[
+/**
+ * Constructor method.
+ *
+ * <em>@return void</em>
+ */
+public function __construct()
 {
 }
             ]]>

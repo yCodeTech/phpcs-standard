@@ -32,8 +32,9 @@ class FunctionCommentUnitTest extends AbstractSniffTestCase
         return [
             14 => 1,  // Function missing @return tag
             24 => 1,  // Void function with a @return tag
-            36 => 1,  // Generator function missing @return tag (should get iterable)
-            48 => 1,  // Generator function with yield from missing @return tag
+            34 => 1,  // Void constructor magic method with a @return tag
+            44 => 1,  // Generator function missing @return tag (should get iterable)
+            56 => 1,  // Generator function with yield from missing @return tag
         ];
     }
 
