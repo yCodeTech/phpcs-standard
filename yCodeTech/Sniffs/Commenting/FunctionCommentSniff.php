@@ -97,8 +97,12 @@ class FunctionCommentSniff implements Sniff
         // If so, then it should have @return tag with type iterable.
         $isGeneratorFunction = $this->isGeneratorFunction($phpcsFile, $stackPtr);
 
+        // Check if this is an abstract function without explicit return type
+        $isAbstractWithoutExplicitReturn = $this->isAbstractFunctionWithoutExplicitReturn($phpcsFile, $stackPtr);
+
         // If function doesn't return void, it must have @return tag
-        if ((!$hasVoidReturn || $isGeneratorFunction) && !$hasReturnTag) {
+        // Skip this check for abstract functions without explicit return types
+        if ((!$hasVoidReturn || $isGeneratorFunction) && !$hasReturnTag && !$isAbstractWithoutExplicitReturn) {
             $error = 'Missing @return tag in function comment';
             $fix = $phpcsFile->addFixableError($error, $stackPtr, 'MissingReturn');
             if ($fix === true) {
@@ -163,6 +167,16 @@ class FunctionCommentSniff implements Sniff
                     return true;
                 }
             }
+        }
+
+        // For abstract functions, check if they have @return void in their docblock
+        // If so, treat them as void functions for the purpose of flagging unnecessary @return tags
+        $scopeOpener = $tokens[$stackPtr]['scope_opener'] ?? null;
+        $scopeCloser = $tokens[$stackPtr]['scope_closer'] ?? null;
+        
+        if ($scopeOpener === null || $scopeCloser === null) {
+            // This is an abstract function or interface method
+            return $this->abstractFunctionHasVoidReturnTag($phpcsFile, $stackPtr);
         }
 
         // Check if function implicitly returns void by analysing the function body
@@ -278,6 +292,107 @@ class FunctionCommentSniff implements Sniff
         ];
 
         return in_array($functionName, $voidMagicMethods, true);
+    }
+
+    /**
+     * Check if an abstract function has a @return void tag in its docblock.
+     * 
+     * For abstract functions, if they have @return void in their docblock,
+     * we should treat them as void functions for flagging purposes.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int $stackPtr The position of the function token.
+     *
+     * @return bool
+     */
+    private function abstractFunctionHasVoidReturnTag(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Find the docblock for this function (reuse existing logic from process method)
+        $commentEnd = $phpcsFile->findPrevious(T_DOC_COMMENT_CLOSE_TAG, ($stackPtr - 1));
+        if ($commentEnd === false) {
+            return false;
+        }
+
+        // Check if this docblock actually belongs to this function
+        $tokenAfterComment = $phpcsFile->findNext(
+            [T_WHITESPACE, T_COMMENT, T_PUBLIC, T_PRIVATE, T_PROTECTED, T_STATIC, T_FINAL, T_ABSTRACT],
+            ($commentEnd + 1),
+            $stackPtr,
+            true
+        );
+        
+        if ($tokenAfterComment !== false && $tokenAfterComment !== $stackPtr) {
+            return false;
+        }
+
+        $commentStart = $tokens[$commentEnd]['comment_opener'];
+
+        // Look for @return void tag in the docblock
+        for ($i = $commentStart; $i <= $commentEnd; $i++) {
+            if ($tokens[$i]['code'] === T_DOC_COMMENT_TAG && $tokens[$i]['content'] === '@return') {
+                // Check if the next token after @return is 'void'
+                $nextToken = $phpcsFile->findNext([T_DOC_COMMENT_WHITESPACE], $i + 1, $commentEnd, true);
+                if ($nextToken !== false && $tokens[$nextToken]['code'] === T_DOC_COMMENT_STRING) {
+                    $returnContent = trim($tokens[$nextToken]['content']);
+                    if (strpos($returnContent, 'void') === 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if this is an abstract function without explicit return type.
+     * 
+     * Abstract functions without explicit return types should not be required
+     * to have @return tags.
+     *
+     * @param \PHP_CodeSniffer\Files\File $phpcsFile The file being scanned.
+     * @param int $stackPtr The position of the function token.
+     *
+     * @return bool
+     */
+    private function isAbstractFunctionWithoutExplicitReturn(File $phpcsFile, $stackPtr)
+    {
+        $tokens = $phpcsFile->getTokens();
+
+        // Check if this is an abstract function
+        $scopeOpener = $tokens[$stackPtr]['scope_opener'] ?? null;
+        $scopeCloser = $tokens[$stackPtr]['scope_closer'] ?? null;
+        
+        if ($scopeOpener !== null || $scopeCloser !== null) {
+            // This is not an abstract function (has a body)
+            return false;
+        }
+
+        // Check if it has an explicit return type
+        $openParen = $phpcsFile->findNext(T_OPEN_PARENTHESIS, $stackPtr);
+        if ($openParen === false) {
+            return false;
+        }
+
+        $closeParen = $tokens[$openParen]['parenthesis_closer'] ?? null;
+        if ($closeParen === null) {
+            return false;
+        }
+
+        // Look for a colon (indicating return type) after the closing parenthesis
+        $colonPtr = $phpcsFile->findNext(T_COLON, $closeParen + 1);
+        
+        // If no colon found, or colon is after a semicolon, then no explicit return type
+        $semicolonPtr = $phpcsFile->findNext(T_SEMICOLON, $closeParen + 1);
+        
+        if ($colonPtr === false || ($semicolonPtr !== false && $colonPtr > $semicolonPtr)) {
+            // No explicit return type
+            return true;
+        }
+        
+        return false;
     }
 
     /**

@@ -38,7 +38,7 @@
  * @method  mixed   get($name)   Description
  */
 
-class TestClass
+abstract class TestClass
 {
     /************************
      * CLASS PROPERTY TESTS *
@@ -382,6 +382,16 @@ class TestClass
     {
         echo $message;
     }
+
+    /**
+     * Abstract function that returns void with a `@return void` tag (should be flagged).
+     *
+     * The following should be fixed:
+     * - The `@return` tag should be removed.
+     *
+     * @return void
+     */
+    abstract public function testAbstractVoidFunction();
 
     /*****************************************
      * VOID MAGIC METHODS WITH @RETURN TESTS *
