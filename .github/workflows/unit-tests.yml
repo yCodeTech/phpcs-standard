@@ -8,7 +8,11 @@ on:
     paths-ignore:
       - "**.md"
       - "**.xml"
+
   pull_request:
+    # Don't run on pull requests that only change unit test workflow files.
+    paths-ignore:
+      - "**unit-tests.yml"
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
