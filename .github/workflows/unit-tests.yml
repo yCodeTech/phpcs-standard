@@ -63,7 +63,7 @@ jobs:
         # @link https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix
         #
         # The matrix is set up so as not to duplicate the builds which are run for code coverage.
-        php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
+        php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5"]
         phpcs_version: ["lowest", "stable", "4.x-dev", "3.x-dev"]
 
         exclude:
@@ -83,6 +83,8 @@ jobs:
           - php: "7.4"
             phpcs_version: "4.x-dev"
           - php: "8.2"
+            phpcs_version: "4.x-dev"
+          - php: "8.5"
             phpcs_version: "4.x-dev"
 
     name: "Test: PHP ${{ matrix.php }} - PHPCS ${{ matrix.phpcs_version }}"
