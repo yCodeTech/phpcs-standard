@@ -64,7 +64,7 @@ jobs:
         #
         # The matrix is set up so as not to duplicate the builds which are run for code coverage.
         php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
-        phpcs_version: ["lowest", "stable", "4.x-dev"]
+        phpcs_version: ["lowest", "stable", "4.x-dev", "3.x-dev"]
 
         exclude:
           - php: "8.3"
