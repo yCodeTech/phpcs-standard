@@ -1,0 +1,40 @@
+<?php
+
+// @phpcs:disable yCodeTech.Commenting.FunctionComment
+// We're not concerned with docblocks here.
+
+/**
+ * Test file for DisallowVoidTypeSniff.
+ *
+ * Tests detection of explicit void return type declarations.
+ */
+
+class TestClass
+{
+    public function explicitVoidMethod(): void
+    {
+        echo "Hello";
+    }
+
+    public function explicitVoidWithParam(string $message): void
+    {
+        echo $message;
+    }
+
+    // Should not flag - no void type
+    public function regularMethod(): string
+    {
+        return "Hello";
+    }
+
+    // Should not flag - no return type
+    public function noReturnType()
+    {
+        echo "Hello";
+    }
+}
+
+function explicitVoidFunction(): void
+{
+    echo "Hello";
+}

@@ -1,0 +1,28 @@
+<documentation title="Disallow Void Type">
+    <standard>
+        <![CDATA[
+        Explicit void return type declarations are disallowed. The absence of a return type already implies void.
+
+        ---
+
+        ]]>
+    </standard>
+    <code_comparison>
+        <code title="✔️ Valid: No return type (implicitly void)">
+            <![CDATA[
+function doSomething()
+{
+    echo "Hello";
+}
+            ]]>
+        </code>
+        <code title="❌ Invalid: Explicit void return type">
+            <![CDATA[
+function doSomething()<em>: void</em>
+{
+    echo "Hello";
+}
+            ]]>
+        </code>
+    </code_comparison>
+</documentation>
