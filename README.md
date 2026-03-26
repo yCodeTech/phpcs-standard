@@ -579,6 +579,56 @@ $bar = (integer) $count;
 </tr>
 </table>
 
+### yCodeTech.Types.DisallowVoidType
+
+Explicit `void` return type declarations are disallowed on functions, methods, and closures. The absence of a return type already implies void.
+
+<table>
+  <tr>
+    <th>Rules</th>
+    <th>Fixable?</th>
+  </tr>
+  <tr>
+    <td>Explicit <code>: void</code> return type declarations must be removed.</td>
+    <td>✔️</td>
+  </tr>
+</table>
+
+#### Violation Codes:
+
+`yCodeTech.Types.DisallowVoidType.Found`
+
+#### Examples:
+
+<table>
+<tr>
+  <th>✔️ Valid: No return type (implicitly void)</th>
+  <th>❌ Invalid: Explicit void return type</th>
+</tr>
+<tr>
+<td>
+
+```php
+function doSomething()
+{
+    echo "Hello";
+}
+```
+
+</td>
+<td>
+
+```php
+function doSomething(): void
+{
+    echo "Hello";
+}
+```
+
+</td>
+</tr>
+</table>
+
 ## Testing
 
 To test the standard against the provided comprehensive test file, please see [the specific instructions](./test_utils/README.md).

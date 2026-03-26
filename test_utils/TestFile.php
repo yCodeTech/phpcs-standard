@@ -270,11 +270,14 @@ abstract class TestClass
      ***********************/
 
     /**
-     * Function that returns void with an explicit `void` typing
-     * (should NOT be flagged for missing `@return` tag).
+    * Function that returns void with an explicit `void` typing
+     * (should be flagged for explicit void type, but NOT for missing `@return` tag).
+     *
+     * The following should be fixed:
+     * - The explicit `: void` return type should be removed.
      *
      * The following should NOT be fixed:
-     * - A `@return` tag should not be added for an explicit `void` return.
+     * - A `@return` tag should not be added.
      *
      * @param string $message Message to display
      */
@@ -360,6 +363,7 @@ abstract class TestClass
      *
      * The following should be fixed:
      * - The `@return` tag should be removed.
+     * - The explicit `: void` return type should be removed.
      *
      * @return void
      */
