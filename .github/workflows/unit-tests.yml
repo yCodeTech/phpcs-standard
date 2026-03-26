@@ -8,7 +8,11 @@ on:
     paths-ignore:
       - "**.md"
       - "**.xml"
+
   pull_request:
+    # Don't run on pull requests that only change unit test workflow files.
+    paths-ignore:
+      - "**unit-tests.yml"
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
@@ -63,8 +67,8 @@ jobs:
         # @link https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-syntax-for-github-actions#jobsjob_idstrategymatrix
         #
         # The matrix is set up so as not to duplicate the builds which are run for code coverage.
-        php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4"]
-        phpcs_version: ["lowest", "stable", "4.x-dev"]
+        php: ["7.2", "7.3", "7.4", "8.0", "8.1", "8.2", "8.3", "8.4", "8.5"]
+        phpcs_version: ["lowest", "stable", "4.x-dev", "3.x-dev"]
 
         exclude:
           - php: "8.3"
@@ -77,12 +81,14 @@ jobs:
 
           # Test against dev versions of all dependencies with select PHP versions for early detection of issues.
           - php: "7.2"
-            phpcs_version: "dev-master"
+            phpcs_version: "3.x-dev"
           - php: "7.2"
             phpcs_version: "4.x-dev"
           - php: "7.4"
             phpcs_version: "4.x-dev"
           - php: "8.2"
+            phpcs_version: "4.x-dev"
+          - php: "8.5"
             phpcs_version: "4.x-dev"
 
     name: "Test: PHP ${{ matrix.php }} - PHPCS ${{ matrix.phpcs_version }}"
