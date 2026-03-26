@@ -77,7 +77,7 @@ jobs:
 
           # Test against dev versions of all dependencies with select PHP versions for early detection of issues.
           - php: "7.2"
-            phpcs_version: "dev-master"
+            phpcs_version: "3.x-dev"
           - php: "7.2"
             phpcs_version: "4.x-dev"
           - php: "7.4"
