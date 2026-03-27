@@ -7,10 +7,22 @@
 
 A custom [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/tree/4.x) standard that enforces opinionated type and docblock rules with auto-fixing capabilities.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Sniffs](#sniffs)
+  - [yCodeTech.Commenting.DocblockFormat](#ycodetechcommentingdocblockformat)
+  - [yCodeTech.Commenting.FunctionComment](#ycodetechcommentingfunctioncomment)
+  - [yCodeTech.Types.DisallowTypeLongNames](#ycodetechtypesdisallowtypelongnames)
+  - [yCodeTech.Types.DisallowVoidType](#ycodetechtypesdisallowvoidtype)
+- [Testing](#testing)
+  - [Unit Tests](#unit-tests)
+
 ## Requirements
 
--   `php >= 7.2`
--   `squizlabs/php_codesniffer 3.13+ || 4.x`
+- `php >= 7.2`
+- `squizlabs/php_codesniffer 3.13+ || 4.x`
 
 ## Installation
 
@@ -29,25 +41,25 @@ $ composer global require ycodetech/phpcs-standard
 Enforces proper spacing and formatting in docblocks.
 
 <table>
-  <tr>
-  <th>Rules</th>
-  <th>Fixable?</th>
-  </tr>
-  <tr>
-    <td>All docblock tags must have exactly <code>1 space</code> between each element.
-    </td>
-    <td>✔️</td>
-  </tr>
-  <tr>
-    <td>The type and variable in any tag must be separated by a <code>space</code>.
-    </td>
-    <td>✔️</td>
-  </tr>
-  <tr>
-    <td><code>@return</code> tags must be preceded by exactly <code>1 empty line</code>.
-    </td>
-    <td>✔️</td>
-  </tr>
+<tr><th>Rules</th><th>Fixable?</th></tr>
+
+<tr>
+<td>All docblock tags must have exactly <code>1 space</code> between each element.
+</td>
+<td>✔️</td>
+</tr>
+
+<tr>
+<td>The type and variable in any tag must be separated by a <code>space</code>.
+</td>
+<td>✔️</td>
+</tr>
+
+<tr>
+<td><code>@return</code> tags must be preceded by exactly <code>1 empty line</code>.
+</td>
+<td>✔️</td>
+</tr>
 </table>
 
 #### Violation Codes:
@@ -60,8 +72,8 @@ Enforces proper spacing and formatting in docblocks.
 
 <table>
 <tr>
-  <th>✔️ Valid: Exactly 1 space between tag elements</th>
-  <th>❌ Invalid: Multiple spaces between tag elements</th>
+<th>✔️ Valid: Exactly 1 space between tag elements</th>
+<th>❌ Invalid: Multiple spaces between tag elements</th>
 </tr>
 <tr>
 <td>
@@ -95,8 +107,8 @@ Enforces proper spacing and formatting in docblocks.
 
 <table>
 <tr>
-  <th>✔️ Valid: Exactly 1 space between type and variable</th>
-  <th>❌ Invalid: 0 spaces between type and variable</th>
+<th>✔️ Valid: Exactly 1 space between type and variable</th>
+<th>❌ Invalid: 0 spaces between type and variable</th>
 </tr>
 <tr>
 <td>
@@ -122,8 +134,8 @@ Enforces proper spacing and formatting in docblocks.
 
 <table>
 <tr>
-  <th>✔️ Valid: Exactly 1 empty line before @return tag</th>
-  <th>❌ Invalid: 0 empty lines before @return tag</th>
+<th>✔️ Valid: Exactly 1 empty line before @return tag</th>
+<th>❌ Invalid: 0 empty lines before @return tag</th>
 </tr>
 <tr>
 <td>
@@ -152,8 +164,8 @@ Enforces proper spacing and formatting in docblocks.
 
 <table>
 <tr>
-  <th>✔️ Valid: Exactly 1 empty line before @return tag</th>
-  <th>❌ Invalid: Multiple empty lines before @return tag</th>
+<th>✔️ Valid: Exactly 1 empty line before @return tag</th>
+<th>❌ Invalid: Multiple empty lines before @return tag</th>
 </tr>
 <tr>
 <td>
@@ -188,51 +200,49 @@ Enforces proper spacing and formatting in docblocks.
 Functions that return a value must have a `@return` docblock tag (nested anonymous function and closure returns will be ignored).
 
 <table>
-  <tr>
-    <th>Rules</th>
-    <th>Fixable?</th>
-    <th>Notes</th>
-  </tr>
+<tr><th>Rules</th><th>Fixable?</th><th>Notes</th></tr>
 
-  <tr>
-    <td>Functions with <code>non-void</code> return types (<code>string</code>, <code>bool</code>, etc.) must have a <code>@return</code> tag.
-    </td>
-    <td>✔️</td>
-     <td>
-
--   Fixes with a <code>mixed</code> return type.
-
--   Magic methods (e.g. <code>\_\_construct</code>, <code>\_\_get</code>, etc.) are exempt.
-
-  </td>
-  </tr>
-  <tr>
-    <td>Functions with <code>void</code> return types must NOT have <code>@return</code> tags, except generator functions.
-    </td>
-    <td>✔️</td>
-    <td>
-    
--   Most magic methods are exempt, except for those that return `void`:
-<code>\_\_construct</code>, 
-<code>\_\_destruct</code>, 
-<code>\_\_clone</code>, 
-<code>\_\_set</code>, 
-<code>\_\_unset</code>, 
-<code>\_\_wakeup</code>, and
-<code>\_\_unserialize</code>.
-
-  </td>
-</tr>
 <tr>
-  <td>Generator functions must have a <code>@return</code> tag.
-  </td>
-  <td>✔️</td>
-  <td>
+<td>Functions with <code>non-void</code> return types (<code>string</code>, <code>bool</code>, etc.) must have a <code>@return</code> tag.
+</td>
+<td>✔️</td>
+<td>
+
+- Fixes with a <code>mixed</code> return type.
+
+- Magic methods (e.g. <code>\_\_construct</code>, <code>\_\_get</code>, etc.) are exempt.
+
+</td>
+</tr>
+
+<tr>
+<td>Functions with <code>void</code> return types must NOT have <code>@return</code> tags, except generator functions.
+</td>
+<td>✔️</td>
+<td>
+
+- Most magic methods are exempt, except for those that return `void`:
+  <code>\_\_construct</code>,
+  <code>\_\_destruct</code>,
+  <code>\_\_clone</code>,
+  <code>\_\_set</code>,
+  <code>\_\_unset</code>,
+  <code>\_\_wakeup</code>, and
+  <code>\_\_unserialize</code>.
+
+</td>
+</tr>
+
+<tr>
+<td>Generator functions must have a <code>@return</code> tag.
+</td>
+<td>✔️</td>
+<td>
 
 - Fixes with an <code>iterable</code> return type.
 
 </td>
-  </tr>
+</tr>
 </table>
 
 #### Violation Codes:
@@ -245,8 +255,8 @@ Functions that return a value must have a `@return` docblock tag (nested anonymo
 
 <table>
 <tr>
-  <th>✔️ Valid: @return tag for non-void function</th>
-  <th>❌ Invalid: Missing @return tag for non-void function</th>
+<th>✔️ Valid: @return tag for non-void function</th>
+<th>❌ Invalid: Missing @return tag for non-void function</th>
 </tr>
 <tr>
 <td>
@@ -284,8 +294,8 @@ public function formatString(string $input): string
 
 <table>
 <tr>
-  <th>✔️ Valid: No @return for void function</th>
-  <th>❌ Invalid: @return tag on void function</th>
+<th>✔️ Valid: No @return for void function</th>
+<th>❌ Invalid: @return tag on void function</th>
 </tr>
 <tr>
 <td>
@@ -323,8 +333,8 @@ public function processData(array $data): void
 
 <table>
 <tr>
-  <th>✔️ Valid: @return tag for generator function</th>
-  <th>❌ Invalid: Missing @return tag for generator function</th>
+<th>✔️ Valid: @return tag for generator function</th>
+<th>❌ Invalid: Missing @return tag for generator function</th>
 </tr>
 <tr>
 <td>
@@ -367,39 +377,38 @@ public function formatString(string $input)
 Long type names are disallowed. Short names must be used in docblocks, type declarations, and type casting.
 
 <table>
-  <tr>
-    <th>Rules</th>
-    <th>Fixable?</th>
-  </tr>
-  <tr>
-    <td>Use <code>bool</code> instead of <code>boolean</code>.</td>
-    <td>✔️</td>
-  </tr>
-  <tr>
-    <td>Use <code>int</code> instead of <code>integer</code>.</td>
-    <td>✔️</td>
-  </tr>
-  <tr>
-    <th>Notes</th>
-    <td>
-    
--   Docblocks and type declarations include union and nullable types.
+<tr><th>Rules</th><th>Fixable?</th></tr>
 
--   Docblock types can also include generic types.
+<tr>
+<td>Use <code>bool</code> instead of <code>boolean</code>.</td>
+<td>✔️</td>
+</tr>
 
--   Types will only be fixed in these regular docblocks tags:
+<tr>
+<td>Use <code>int</code> instead of <code>integer</code>.</td>
+<td>✔️</td>
+</tr>
 
-    `@param`, `@return`, `@var`, `@property`, `@method`.
+<tr>
+<th>Notes</th>
+<td>
 
-    Also any other tags that contain the regular tags; example:
+- Docblocks and type declarations include union and nullable types.
 
-    `@property-read`, `@phpstan-param`, `@psalm-return`.
+- Docblock types can also include generic types.
 
--   Any types in docblock descriptions will not get fixed.
+- Types will only be fixed in these regular docblocks tags:
 
-    </td>
+  `@param`, `@return`, `@var`, `@property`, `@method`.
 
-  </tr>
+  Also any other tags that contain the regular tags; example:
+
+  `@property-read`, `@phpstan-param`, `@psalm-return`.
+
+- Any types in docblock descriptions will not get fixed.
+
+</td>
+</tr>
 </table>
 
 #### Violation Codes:
@@ -414,8 +423,8 @@ Long type names are disallowed. Short names must be used in docblocks, type decl
 
 <table>
 <tr>
-  <th>✔️ Valid: Short name docblock types</th>
-  <th>❌ Invalid: Long name docblock types</th>
+<th>✔️ Valid: Short name docblock types</th>
+<th>❌ Invalid: Long name docblock types</th>
 </tr>
 <tr>
 <td>
@@ -446,8 +455,8 @@ Long type names are disallowed. Short names must be used in docblocks, type decl
 </table>
 <table>
 <tr>
-  <th>✔️ Valid: Short name docblock generic types</th>
-  <th>❌ Invalid: Long name docblock generic types</th>
+<th>✔️ Valid: Short name docblock generic types</th>
+<th>❌ Invalid: Long name docblock generic types</th>
 </tr>
 <tr>
 <td>
@@ -478,8 +487,8 @@ Long type names are disallowed. Short names must be used in docblocks, type decl
 </table>
 <table>
 <tr>
-  <th>✔️ Valid: Short name class property type declarations</th>
-  <th>❌ Invalid: Long name class property type declarations</th>
+<th>✔️ Valid: Short name class property type declarations</th>
+<th>❌ Invalid: Long name class property type declarations</th>
 </tr>
 <tr>
 <td>
@@ -502,8 +511,8 @@ protected integer $userCount;
 </table>
 <table>
 <tr>
-  <th>✔️ Valid: Short name function/method/closure types</th>
-  <th>❌ Invalid: Long name function/method/closure types</th>
+<th>✔️ Valid: Short name function/method/closure types</th>
+<th>❌ Invalid: Long name function/method/closure types</th>
 </tr>
 <tr>
 <td>
@@ -531,8 +540,8 @@ function foo(boolean $flag): integer {
 
 <table>
 <tr>
-  <th>✔️ Valid: Short name nullable and union types</th>
-  <th>❌ Invalid: Long name nullable and union types</th>
+<th>✔️ Valid: Short name nullable and union types</th>
+<th>❌ Invalid: Long name nullable and union types</th>
 </tr>
 <tr>
 <td>
@@ -556,8 +565,8 @@ function foo(?boolean $flag, boolean|string $var): ?integer {
 
 <table>
 <tr>
-  <th>✔️ Valid: Short name type casting</th>
-  <th>❌ Invalid: Long name type casting</th>
+<th>✔️ Valid: Short name type casting</th>
+<th>❌ Invalid: Long name type casting</th>
 </tr>
 <tr>
 <td>
@@ -584,14 +593,12 @@ $bar = (integer) $count;
 Explicit `void` return type declarations are disallowed on functions, methods, and closures. The absence of a return type already implies void.
 
 <table>
-  <tr>
-    <th>Rules</th>
-    <th>Fixable?</th>
-  </tr>
-  <tr>
-    <td>Explicit <code>: void</code> return type declarations must be removed.</td>
-    <td>✔️</td>
-  </tr>
+<tr><th>Rules</th><th>Fixable?</th></tr>
+
+<tr>
+<td>Explicit <code>: void</code> return type declarations must be removed.</td>
+<td>✔️</td>
+</tr>
 </table>
 
 #### Violation Codes:
@@ -602,8 +609,8 @@ Explicit `void` return type declarations are disallowed on functions, methods, a
 
 <table>
 <tr>
-  <th>✔️ Valid: No return type (implicitly void)</th>
-  <th>❌ Invalid: Explicit void return type</th>
+<th>✔️ Valid: No return type (implicitly void)</th>
+<th>❌ Invalid: Explicit void return type</th>
 </tr>
 <tr>
 <td>

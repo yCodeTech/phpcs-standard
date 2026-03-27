@@ -3,7 +3,7 @@
     "useTabs": false,
     "overrides": [
         {
-            "files": ["*.yml"],
+            "files": ["*.yml", "*.md"],
             "options": {
                 "tabWidth": 2,
                 "useTabs": false
