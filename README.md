@@ -7,6 +7,18 @@
 
 A custom [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/tree/4.x) standard that enforces opinionated type and docblock rules with auto-fixing capabilities.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Sniffs](#sniffs)
+  - [yCodeTech.Commenting.DocblockFormat](#ycodetechcommentingdocblockformat)
+  - [yCodeTech.Commenting.FunctionComment](#ycodetechcommentingfunctioncomment)
+  - [yCodeTech.Types.DisallowTypeLongNames](#ycodetechtypesdisallowtypelongnames)
+  - [yCodeTech.Types.DisallowVoidType](#ycodetechtypesdisallowvoidtype)
+- [Testing](#testing)
+  - [Unit Tests](#unit-tests)
+
 ## Requirements
 
 -   `php >= 7.2`
