@@ -54,24 +54,24 @@ chore: update project files
 
 This repository extends the standard Conventional Commits types with additional project-specific types.
 
-| Type        | When to use                                                 |
-| ----------- | ----------------------------------------------------------- |
-| `feat`      | New feature                                                 |
-| `fix`       | Bug fix                                                     |
-| `docs`      | Documentation and docblocks only                            |
-| `style`     | Formatting/whitespace, missing semi-colons, no logic change |
-| `refactor`  | Code restructuring, no behaviour change                     |
-| `perf`      | Performance improvement                                     |
-| `test`      | Add or update tests                                         |
-| `build`     | Build system or dependency changes                          |
-| `chore`     | Maintenance, tooling, config, version bumps                 |
-| `ci`        | CI/CD pipeline                                              |
-| `revert`    | Revert a previous commit                                    |
-| `remove`    | Remove code or files                                        |
-| `security`  | Security-related changes                                    |
-| `deprecate` | Deprecation-related changes                                 |
+| Type        | When to use                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------ |
+| `feat`      | New feature                                                                                                  |
+| `fix`       | Bug fix                                                                                                      |
+| `docs`      | Documentation and docblocks only, but not Copilot instructions.                                              |
+| `style`     | Formatting/whitespace, missing semi-colons, no logic change                                                  |
+| `refactor`  | Code restructuring, no behaviour change                                                                      |
+| `perf`      | Performance improvement                                                                                      |
+| `test`      | Add or update tests                                                                                          |
+| `build`     | Build system or dependency changes                                                                           |
+| `chore`     | Maintenance, tooling (copilot instructions, etc.), config (e.g. editorconfig, prettier, etc.), version bumps |
+| `ci`        | CI/CD pipeline                                                                                               |
+| `revert`    | Revert a previous commit                                                                                     |
+| `remove`    | Remove code or files                                                                                         |
+| `security`  | Security-related changes                                                                                     |
+| `deprecate` | Deprecation-related changes                                                                                  |
 
-## Custom Type Examples
+## Type Examples
 
 Prefer these extended types when they describe the change more accurately than `refactor`, `fix`, or `chore`.
 
@@ -79,12 +79,22 @@ Prefer these extended types when they describe the change more accurately than `
 - Use `security` when security risk reduction is the primary intent and outcome, not for unrelated fixes.
 - Use `deprecate` only when introducing or documenting a deprecation path, not when fully removing the deprecated code.
 
+Prefer these types when they describe the change more accurately than any others.
+
+- Use `ci` for changes related to the CI/CD pipeline in the `.github/workflows` directory, not for general build or tooling changes.
+- Always use `chore` for changes to Copilot instruction files that end with `.instructions.md`, not for general documentation changes.
+
 ```
 remove(drivers): delete legacy driver compatibility shim
 
 security(nginx): harden fastcgi param handling for site isolation
 
 deprecate(config): mark `php_port` as deprecated in favour of `php81_port`
+
+ci: update GitHub Actions workflow to use Node 18
+
+chore: update Copilot commit message generation instructions
+
 ```
 
 ## Breaking Changes
