@@ -21,8 +21,8 @@ A custom [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/tre
 
 ## Requirements
 
--   `php >= 7.2`
--   `squizlabs/php_codesniffer 3.13+ || 4.x`
+- `php >= 7.2`
+- `squizlabs/php_codesniffer 3.13+ || 4.x`
 
 ## Installation
 
@@ -212,9 +212,9 @@ Functions that return a value must have a `@return` docblock tag (nested anonymo
     <td>✔️</td>
      <td>
 
--   Fixes with a <code>mixed</code> return type.
+- Fixes with a <code>mixed</code> return type.
 
--   Magic methods (e.g. <code>\_\_construct</code>, <code>\_\_get</code>, etc.) are exempt.
+- Magic methods (e.g. <code>\_\_construct</code>, <code>\_\_get</code>, etc.) are exempt.
 
   </td>
   </tr>
@@ -397,17 +397,17 @@ Long type names are disallowed. Short names must be used in docblocks, type decl
     
 -   Docblocks and type declarations include union and nullable types.
 
--   Docblock types can also include generic types.
+- Docblock types can also include generic types.
 
--   Types will only be fixed in these regular docblocks tags:
+- Types will only be fixed in these regular docblocks tags:
 
-    `@param`, `@return`, `@var`, `@property`, `@method`.
+  `@param`, `@return`, `@var`, `@property`, `@method`.
 
-    Also any other tags that contain the regular tags; example:
+  Also any other tags that contain the regular tags; example:
 
-    `@property-read`, `@phpstan-param`, `@psalm-return`.
+  `@property-read`, `@phpstan-param`, `@psalm-return`.
 
--   Any types in docblock descriptions will not get fixed.
+- Any types in docblock descriptions will not get fixed.
 
     </td>
 
