@@ -173,7 +173,7 @@ class FunctionCommentSniff implements Sniff
         // If so, treat them as void functions for the purpose of flagging unnecessary @return tags
         $scopeOpener = $tokens[$stackPtr]['scope_opener'] ?? null;
         $scopeCloser = $tokens[$stackPtr]['scope_closer'] ?? null;
-        
+
         if ($scopeOpener === null || $scopeCloser === null) {
             // This is an abstract function or interface method
             return $this->abstractFunctionHasVoidReturnTag($phpcsFile, $stackPtr);
@@ -296,7 +296,7 @@ class FunctionCommentSniff implements Sniff
 
     /**
      * Check if an abstract function has a @return void tag in its docblock.
-     * 
+     *
      * For abstract functions, if they have @return void in their docblock,
      * we should treat them as void functions for flagging purposes.
      *
@@ -322,7 +322,7 @@ class FunctionCommentSniff implements Sniff
             $stackPtr,
             true
         );
-        
+
         if ($tokenAfterComment !== false && $tokenAfterComment !== $stackPtr) {
             return false;
         }
@@ -348,7 +348,7 @@ class FunctionCommentSniff implements Sniff
 
     /**
      * Check if this is an abstract function without explicit return type.
-     * 
+     *
      * Abstract functions without explicit return types should not be required
      * to have @return tags.
      *
@@ -364,7 +364,7 @@ class FunctionCommentSniff implements Sniff
         // Check if this is an abstract function
         $scopeOpener = $tokens[$stackPtr]['scope_opener'] ?? null;
         $scopeCloser = $tokens[$stackPtr]['scope_closer'] ?? null;
-        
+
         if ($scopeOpener !== null || $scopeCloser !== null) {
             // This is not an abstract function (has a body)
             return false;
@@ -383,15 +383,15 @@ class FunctionCommentSniff implements Sniff
 
         // Look for a colon (indicating return type) after the closing parenthesis
         $colonPtr = $phpcsFile->findNext(T_COLON, $closeParen + 1);
-        
+
         // If no colon found, or colon is after a semicolon, then no explicit return type
         $semicolonPtr = $phpcsFile->findNext(T_SEMICOLON, $closeParen + 1);
-        
+
         if ($colonPtr === false || ($semicolonPtr !== false && $colonPtr > $semicolonPtr)) {
             // No explicit return type
             return true;
         }
-        
+
         return false;
     }
 
